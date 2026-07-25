@@ -109,11 +109,11 @@ def new_id(prefix: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Entity roster (15 entities: 8 user, 4 service_account, 3 edge_device)
+# Entity roster (25 entities: 12 user, 7 service_account, 6 edge_device)
 # ---------------------------------------------------------------------------
 def build_entities():
     entities = []
-    for i in range(8):
+    for i in range(12):
         entities.append({
             "entity_id": f"user_{i:02d}",
             "entity_type": "user",
@@ -125,7 +125,7 @@ def build_entities():
             "typical_session_len": random.randint(4, 8),
             "typical_duration_mean": random.uniform(300, 1200),
         })
-    for i in range(4):
+    for i in range(7):
         entities.append({
             "entity_id": f"svc_{i:02d}",
             "entity_type": "service_account",
@@ -137,7 +137,7 @@ def build_entities():
             "typical_session_len": random.randint(3, 6),
             "typical_duration_mean": random.uniform(60, 300),
         })
-    for i in range(3):
+    for i in range(6):
         entities.append({
             "entity_id": f"edge_{i:02d}",
             "entity_type": "edge_device",
@@ -221,7 +221,7 @@ def generate_normal_sessions(entities, sessions_per_entity_per_day=3.5):
 # Attack taxonomy — one injector function per type. Each returns
 # (list_of_sessions, list_of_ground_truth_records).
 # ---------------------------------------------------------------------------
-def inject_brute_force(entities, n_incidents=4):
+def inject_brute_force(entities, n_incidents=16):
     sessions, gt = [], []
     users = [e for e in entities if e["entity_type"] == "user"]
     for _ in range(n_incidents):
@@ -241,7 +241,7 @@ def inject_brute_force(entities, n_incidents=4):
     return sessions, gt
 
 
-def inject_impossible_travel(entities, n_incidents=4):
+def inject_impossible_travel(entities, n_incidents=8):
     sessions, gt = [], []
     users = [e for e in entities if e["entity_type"] == "user"]
     for _ in range(n_incidents):
@@ -260,7 +260,7 @@ def inject_impossible_travel(entities, n_incidents=4):
     return sessions, gt
 
 
-def inject_credential_stuffing(entities, n_incidents=1, batch_size=12):
+def inject_credential_stuffing(entities, n_incidents=1, batch_size=16):
     sessions, gt = [], []
     for _ in range(n_incidents):
         start = _random_start_time()
@@ -281,7 +281,7 @@ def inject_credential_stuffing(entities, n_incidents=1, batch_size=12):
     return sessions, gt
 
 
-def inject_lateral_movement(entities, n_incidents=4):
+def inject_lateral_movement(entities, n_incidents=16):
     sessions, gt = [], []
     svc = [e for e in entities if e["entity_type"] == "service_account"]
     for _ in range(n_incidents):
@@ -301,7 +301,7 @@ def inject_lateral_movement(entities, n_incidents=4):
     return sessions, gt
 
 
-def inject_low_and_slow(entities, n_incidents=1):
+def inject_low_and_slow(entities, n_incidents=3):
     sessions, gt = [], []
     users = [e for e in entities if e["entity_type"] == "user"]
     for _ in range(n_incidents):
@@ -322,7 +322,7 @@ def inject_low_and_slow(entities, n_incidents=1):
     return sessions, gt
 
 
-def inject_privilege_escalation(entities, n_incidents=4):
+def inject_privilege_escalation(entities, n_incidents=16):
     sessions, gt = [], []
     non_edge = [e for e in entities if e["entity_type"] != "edge_device"]
     for _ in range(n_incidents):
@@ -338,7 +338,7 @@ def inject_privilege_escalation(entities, n_incidents=4):
     return sessions, gt
 
 
-def inject_device_spoofing(entities, n_incidents=4):
+def inject_device_spoofing(entities, n_incidents=16):
     sessions, gt = [], []
     for _ in range(n_incidents):
         entity = random.choice(entities)

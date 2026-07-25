@@ -30,6 +30,21 @@ def main():
     with open(RESULTS_DIR / "incident_narratives.json", "w") as f:
         json.dump(narratives, f, indent=2)
 
+    metrics_path = RESULTS_DIR / "metrics.json"
+    if metrics_path.exists():
+        metrics = json.load(open(metrics_path))
+    else:
+        metrics = {}
+    grounded_total = len(narratives)
+    grounded_passed = grounded_total - n_failed
+    metrics["grounded_narratives"] = {
+        "passed": grounded_passed,
+        "total": grounded_total,
+        "percent": round((grounded_passed / grounded_total) * 100, 1) if grounded_total else 0.0,
+    }
+    with open(metrics_path, "w") as f:
+        json.dump(metrics, f, indent=2)
+
     print(f"Wrote {len(narratives)} narratives -> {RESULTS_DIR / 'incident_narratives.json'}")
     print(f"Groundedness: {len(narratives) - n_failed}/{len(narratives)} passed")
 

@@ -8,6 +8,9 @@ geo signal (`is_new_geo`) was folded into a 9-feature average, which diluted
 a single strong deviation into noise. `_geo_velocity_flag()` below is a
 dedicated, non-diluted signal computed the same way cold-start rules are —
 kept OUT of the averaged feature vector on purpose.
+
+The impossibility check itself now uses geo distance / implied speed rather
+than a flat time threshold.
 """
 from __future__ import annotations
 
@@ -30,11 +33,30 @@ FEATURE_NAMES = [
     "sequence_length",
 ]
 
-# PLACEHOLDER: any geo change within this window is treated as implausible.
-# A real system would compute actual distance/plausible-speed between geo
-# pairs; this hackathon build uses a flat time threshold instead (documented
-# limitation — flag this in the report's Section 10).
-IMPOSSIBLE_TRAVEL_MAX_GAP_HOURS = 3.0
+GEO_COORDS = {
+    "Bengaluru,IN": (12.9716, 77.5946),
+    "Mumbai,IN": (19.0760, 72.8777),
+    "Singapore,SG": (1.3521, 103.8198),
+    "Frankfurt,DE": (50.1109, 8.6821),
+    "Ashburn,US": (39.0438, -77.4874),
+    "Tokyo,JP": (35.6762, 139.6503),
+    "Lagos,NG": (6.5244, 3.3792),
+    "Sao_Paulo,BR": (-23.5505, -46.6333),
+}
+
+# Fastest plausible commercial flight speed, with buffer.
+MAX_PLAUSIBLE_SPEED_KMH = 1000.0
+
+
+def haversine_km(geo_a: str, geo_b: str) -> float:
+    lat1, lon1 = GEO_COORDS[geo_a]
+    lat2, lon2 = GEO_COORDS[geo_b]
+    radius_km = 6371.0
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lon2 - lon1)
+    a = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+    return 2 * radius_km * math.asin(math.sqrt(a))
 
 
 def extract_features(session: dict, known_resources: set, known_geos: set = frozenset()) -> np.ndarray:
@@ -102,13 +124,18 @@ class BaselineProfiler:
         current_geo = session["geo_locations"][0] if session["geo_locations"] else None
         if current_geo is None or current_geo == prof.last_geo:
             return False
+        if prof.last_geo not in GEO_COORDS or current_geo not in GEO_COORDS:
+            return False
         try:
             last_end = datetime.fromisoformat(prof.last_session_end)
             this_start = datetime.fromisoformat(session["start_time"])
         except ValueError:
             return False
         gap_hours = (this_start - last_end).total_seconds() / 3600.0
-        return 0 <= gap_hours <= IMPOSSIBLE_TRAVEL_MAX_GAP_HOURS
+        if gap_hours <= 0:
+            return True
+        distance_km = haversine_km(prof.last_geo, current_geo)
+        return (distance_km / gap_hours) > MAX_PLAUSIBLE_SPEED_KMH
 
     def score(self, session: dict):
         """Returns (rarity_score, is_cold_start, deviation_order, geo_velocity_flag)."""

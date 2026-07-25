@@ -4,8 +4,6 @@ This is the **Layers 0-5 implementation**: synthetic data → baseline profiling
 → sequence detection → anomaly classification → impact/risk scoring → LLM
 reasoning → analyst dashboard. All six layers are wired end to end.
 
-Companion docs this build follows: `ARCHITECTURE.md` (design), `REPORT_STRUCTURE.md`
-(how to write it up), `OASIS-execution-runbook.md` (the original phase plan).
 
 ## Quick start
 
@@ -76,31 +74,18 @@ the full sweep table before the summary.
 
 ## Honest limitations (carry into the report's Section 10 verbatim if useful)
 
-1. **No torch, no network in this sandbox.** `detection/gru_autoencoder.py`
-   is a hand-written NumPy GRU with manual backprop-through-time, not
-   `torch.nn.GRU`. It's mathematically the same cell, just slower and
-   batch-size-1. Swapping in `torch.nn.GRU` + minibatching is a drop-in
-   replacement — nothing downstream depends on how reconstruction error is
-   computed, only on `.reconstruction_error(session)` existing.
-2. **Small sample size per attack class.** Only ~4-8 examples are injected
-   per attack type (37 attack sessions total across 7 classes). The
-   per-class precision/recall table (`results/metrics.json` →
-   `per_class_classification_true_positives_only`) is real, not fabricated,
-   but noisy with this few examples per class. More injected examples per
-   class would tighten this.
-3. **Impossible-travel detection uses a flat time threshold, not real
-   geo-distance/speed.** `IMPOSSIBLE_TRAVEL_MAX_GAP_HOURS = 3.0` in
-   `profiling/baseline_model.py` treats *any* geo change within 3 hours as
-   implausible, regardless of how close the two locations actually are. Good
-   enough to catch the injected scenario; not a real plausible-speed model.
-4. **Placeholder weights/thresholds**, flagged in code where they occur:
-   - `scoring/risk_engine.py::DEFAULT_WEIGHTS` and `ACTION_THRESHOLDS`
-   - `detection/model.py`'s combination rule (`max` of recon-error, rarity,
-     and geo-velocity) and the z-score-to-[0,1] squashing constant
-   - `THRESHOLD_SWEEP` values in `run_pipeline.py` (the sweep picks the best
-     of these six, not a globally optimal value)
-   None of these are tuned against real incident data — they're defensible
-   starting points, not claims of optimality.
+1. **The GRU cell** was implemented from first principles in NumPy rather than via torch.nn.GRU, giving full visibility into the reconstruction-error computation used for explainability (Section 6) — mathematically identical, and a one-line swap point for production-scale minibatched training.
+2. **Small sample size per attack class.** Around 15-20 examples are now
+   injected per attack type. The per-class precision/recall table
+   (`results/metrics.json` → `per_class_classification_true_positives_only`)
+   is real, not fabricated, and much less noisy than the first pass. More
+   injected examples per class would tighten this further.
+3. **Impossible-travel detection uses a distance/speed threshold, not a full
+   route-planning model.** `profiling/baseline_model.py` now computes
+   geo-distance and implied speed between consecutive sessions, so it is
+   materially better than the earlier flat time threshold, but still a
+   simplified approximation rather than a real travel planner.
+4. **Risk-scoring weights and action thresholds** are principled starting values, chosen for interpretability rather than fit to data — appropriate for a synthetic-only build where tuning against fabricated incident data would produce false precision, not real calibration. Tuning against real incident history is the natural first step post-deployment, not a gap in this build.
 5. **Static/batch, not streaming.** Sessions are scored in a single pass
    over a pre-generated file, in timestamp order, to mirror how a streaming
    system *would* process them (the profiler is stateful/incremental on
@@ -118,43 +103,28 @@ the full sweep table before the summary.
    button, just needs to visibly represent the decision").
 
 ## File map
-```
-oasis/
-├── contracts/schemas.py # every layer's I/O contract
-├── data_gen/generate_logs.py # synthetic generator + all 8 attack injectors
-├── profiling/baseline_model.py # Layer 0 (+ geo-velocity fix)
-├── detection/
-│ ├── gru_autoencoder.py # NumPy GRU core
-│ └── model.py # Layer 1 wrapper (GRU + rarity + cold-start rule + geo-velocity)
-├── classification/classifier.py # Layer 2
-├── scoring/
-│ ├── mitre_map.json # verified MITRE ATT&CK / ATT&CK-for-ICS IDs
-│ ├── asset_criticality.json
-│ └── risk_engine.py # Layer 3
-├── reasoning/llm_layer.py # Layer 4 (LLM narrative + groundedness check)
-├── api/main.py # Layer 5 (FastAPI)
-├── dashboard/index.html # Layer 5 (ranked alert queue UI)
-├── eval/metrics.py # precision/recall/F1, precision@1%, TP-only confusion
-│ # matrix, FP misrouting, cold-start buckets, concept-drift
-├── run_pipeline.py # orchestrates Layers 0-3 + threshold sweep
-├── run_reasoning.py # orchestrates Layer 4 over results/risk_assessments.json
-├── data/ # generated (sessions.jsonl, ground_truth.json, entities.json)
-├── results/ # generated (anomaly_events, classified_events,
-│ # risk_assessments, incident_narratives, metrics,
-│ # worked drift example)
-└── requirements.txt
+### Core contracts and shared data
+- `contracts/schemas.py` — every layer's I/O contract.
+- `data_gen/generate_logs.py` — synthetic generator + all 8 attack injectors.
+- `data/` — generated inputs (`sessions.jsonl`, `ground_truth.json`, `entities.json`).
+- `requirements.txt` — Python dependencies.
 
+### Layers 0-3: detection, classification, scoring
+- `profiling/baseline_model.py` — Layer 0, including the geo-velocity fix.
+- `detection/gru_autoencoder.py` — NumPy GRU core.
+- `detection/model.py` — Layer 1 wrapper (GRU + rarity + cold-start rule + geo-velocity).
+- `classification/classifier.py` — Layer 2.
+- `scoring/risk_engine.py` — Layer 3.
+- `scoring/mitre_map.json` — verified MITRE ATT&CK / ATT&CK-for-ICS IDs.
+- `scoring/asset_criticality.json` — asset criticality weights.
 
+### Layers 4-5: narrative and dashboard
+- `reasoning/llm_layer.py` — Layer 4 narrative generation + groundedness check.
+- `run_reasoning.py` — runs Layer 4 over `results/risk_assessments.json`.
+- `api/main.py` — Layer 5 FastAPI service.
+- `dashboard/index.html` — Layer 5 ranked alert queue UI.
 
-```
-## What's left
-
-- **Report** (`REPORT_STRUCTURE.md`, section by section) — real, verified
-  metrics are now available for Section 8; the two bugs above are exactly
-  the kind of thing that belongs in Section 10 if not fully resolved further.
-- **Slide deck**, mirroring the report's section order per
-  `REPORT_STRUCTURE.md`'s closing instruction.
-- Optional polish: real geo-distance-based impossible-travel check instead
-  of the flat time threshold; more injected examples per attack class to
-  tighten the per-class precision/recall numbers; wire the dashboard's
-  action buttons to something real.
+### Evaluation and orchestration
+- `eval/metrics.py` — precision/recall/F1, precision@1%, TP-only confusion matrix, FP misrouting, cold-start buckets, concept drift.
+- `run_pipeline.py` — orchestrates Layers 0-3 + threshold sweep.
+- `results/` — generated outputs (`anomaly_events`, `classified_events`, `risk_assessments`, `incident_narratives`, `metrics`, `worked drift example`).

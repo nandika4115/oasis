@@ -123,7 +123,12 @@ def main():
         "n_sessions_total": len(sessions),
         "n_sessions_flagged": len(flagged),
     }
-    with open(RESULTS_DIR / "metrics.json", "w") as f:
+    metrics_path = RESULTS_DIR / "metrics.json"
+    if metrics_path.exists():
+        existing_metrics = json.load(open(metrics_path))
+        if "grounded_narratives" in existing_metrics:
+            all_metrics["grounded_narratives"] = existing_metrics["grounded_narratives"]
+    with open(metrics_path, "w") as f:
         json.dump(all_metrics, f, indent=2)
 
     drift_entity_ids = {s["entity_id"] for s in sessions
