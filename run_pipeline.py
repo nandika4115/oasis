@@ -66,8 +66,16 @@ def main():
             attack_sessions.append(s)
             attack_labels.append(gt["anomaly_type"])
     known_resources_by_entity = {eid: p.known_resources for eid, p in detector.profiler.profiles.items()}
+    known_geos_by_entity = {eid: p.known_geos for eid, p in detector.profiler.profiles.items()}
+    anomaly_by_id = {a["session_id"]: a for a in anomaly_events}
     classifier = AnomalyClassifier()
-    classifier.fit(attack_sessions, attack_labels, known_resources_by_entity)
+    classifier.fit(
+        attack_sessions,
+        attack_labels,
+        known_resources_by_entity,
+        known_geos_by_entity,
+        anomaly_by_id,
+    )
     print(f"  trained on {len(attack_sessions)} attack sessions across {len(classifier.classes_)} classes: "
           f"{classifier.classes_}")
 
@@ -77,7 +85,13 @@ def main():
     for ev_ in flagged:
         session = sessions_by_id[ev_["session_id"]]
         known_res = known_resources_by_entity.get(ev_["entity_id"], set())
-        anomaly_type, confidence, class_probs = classifier.predict(session, known_res)
+        known_geos = known_geos_by_entity.get(ev_["entity_id"], set())
+        anomaly_type, confidence, class_probs = classifier.predict(
+            session,
+            known_res,
+            known_geos,
+            anomaly_by_id.get(ev_["session_id"]),
+        )
         classified_events.append({
             "session_id": ev_["session_id"],
             "anomaly_type": anomaly_type,

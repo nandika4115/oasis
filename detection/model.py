@@ -8,6 +8,9 @@ Combines four signals into anomaly_score:
 4. geo_velocity_flag (Layer 0) — dedicated impossible-travel signal, combined
    via max() so it can't be diluted by the other two, same principle as the
    cold-start rule fallback.
+5. cumulative drift snapshot signal — catches long-horizon low_and_slow
+    buildup that the continuously-adapting EWMA is intentionally designed to
+    absorb for legitimate insider drift.
 """
 from __future__ import annotations
 
@@ -85,7 +88,7 @@ class DetectionLayer:
     def score_all(self, sessions_in_time_order: List[dict]) -> List[dict]:
         results = []
         for session in sessions_in_time_order:
-            rarity_score, is_cold_start, deviation_order, geo_velocity_flag = self.profiler.score(session)
+            rarity_score, is_cold_start, deviation_order, geo_velocity_flag, drift_score = self.profiler.score(session)
 
             ids = self._to_ids(session)
             recon_err, per_step_err = self.gru.reconstruction_error(ids, per_step=True)
@@ -94,20 +97,22 @@ class DetectionLayer:
 
             if is_cold_start:
                 rule_score, triggered = cold_start_rule_score(session)
-                anomaly_score = max(rule_score, rarity_score, geo_velocity_score)
+                anomaly_score = max(rule_score, rarity_score, geo_velocity_score, drift_score)
                 used_fallback = True
                 contributing = triggered + deviation_order[:2]
             else:
-                anomaly_score = max(recon_norm, rarity_score, geo_velocity_score)
+                anomaly_score = max(recon_norm, rarity_score, geo_velocity_score, drift_score)
                 used_fallback = False
                 contributing = list(deviation_order[:3])
-                if per_step_err and recon_norm >= rarity_score and recon_norm >= geo_velocity_score:
+                if per_step_err and recon_norm >= rarity_score and recon_norm >= geo_velocity_score and recon_norm >= drift_score:
                     worst_t = int(np.argmax(per_step_err))
                     if worst_t < len(session["command_sequence"]):
                         contributing.insert(0, f"action:{session['command_sequence'][worst_t]}")
 
             if geo_velocity_flag:
                 contributing.insert(0, "impossible_travel_velocity")
+            if drift_score >= max(recon_norm, rarity_score, geo_velocity_score, 0.45) and "low_and_slow_drift" not in contributing:
+                contributing.insert(0, "low_and_slow_drift")
 
             results.append({
                 "session_id": session["session_id"],
@@ -117,6 +122,7 @@ class DetectionLayer:
                 "is_cold_start": is_cold_start,
                 "used_fallback_rule": used_fallback,
                 "geo_velocity_flag": geo_velocity_flag,
+                "drift_score": round(float(drift_score), 4),
                 "contributing_features": contributing[:5],
             })
         return results

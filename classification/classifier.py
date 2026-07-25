@@ -39,19 +39,35 @@ from sklearn.model_selection import train_test_split
 
 from profiling.baseline_model import FEATURE_NAMES, extract_features
 
-EXTRA_FEATURE_NAMES = ["has_privileged_action", "num_distinct_ips", "resource_breadth"]
+EXTRA_FEATURE_NAMES = [
+    "has_privileged_action",
+    "num_distinct_ips",
+    "resource_breadth",
+    "geo_velocity_flag",
+    "rarity_score",
+    "drift_score",
+]
 ALL_FEATURE_NAMES = FEATURE_NAMES + EXTRA_FEATURE_NAMES
 
 PRIVILEGED_ACTIONS = {"grant_admin", "access_admin_panel", "modify_permissions",
                        "access_root_shell", "disable_logging"}
 
 
-def extract_classification_features(session: dict, known_resources: set) -> np.ndarray:
-    base = extract_features(session, known_resources)
+def extract_classification_features(
+    session: dict,
+    known_resources: set,
+    known_geos: set = frozenset(),
+    detection_signals: dict | None = None,
+) -> np.ndarray:
+    base = extract_features(session, known_resources, known_geos)
+    signals = detection_signals or {}
     extra = np.array([
         1.0 if any(a in PRIVILEGED_ACTIONS for a in session["command_sequence"]) else 0.0,
         len(set(session["source_ips"])),
         len(set(session["resources_touched"])),
+        1.0 if signals.get("geo_velocity_flag") else 0.0,
+        float(signals.get("rarity_score", 0.0)),
+        float(signals.get("drift_score", 0.0)),
     ])
     return np.concatenate([base, extra])
 
@@ -66,11 +82,25 @@ class AnomalyClassifier:
         self.classes_: List[str] = []
         self._fitted = False
 
-    def fit(self, labeled_sessions: List[dict], labels: List[str], known_resources_by_entity: dict):
+    def fit(
+        self,
+        labeled_sessions: List[dict],
+        labels: List[str],
+        known_resources_by_entity: dict,
+        known_geos_by_entity: dict | None = None,
+        detection_signals_by_session: dict | None = None,
+    ):
         """`labeled_sessions` must be ATTACK-labeled sessions only (never
         'normal' / 'insider_drift') — see module docstring."""
+        known_geos_by_entity = known_geos_by_entity or {}
+        detection_signals_by_session = detection_signals_by_session or {}
         X = np.array([
-            extract_classification_features(s, known_resources_by_entity.get(s["entity_id"], set()))
+            extract_classification_features(
+                s,
+                known_resources_by_entity.get(s["entity_id"], set()),
+                known_geos_by_entity.get(s["entity_id"], set()),
+                detection_signals_by_session.get(s["session_id"]),
+            )
             for s in labeled_sessions
         ])
         y = np.array(labels)
@@ -86,8 +116,8 @@ class AnomalyClassifier:
         self._fitted = True
         return X_test, y_test
 
-    def predict(self, session: dict, known_resources: set):
-        x = extract_classification_features(session, known_resources).reshape(1, -1)
+    def predict(self, session: dict, known_resources: set, known_geos: set = frozenset(), detection_signals: dict | None = None):
+        x = extract_classification_features(session, known_resources, known_geos, detection_signals).reshape(1, -1)
         probs = self.clf.predict_proba(x)[0]
         classes = self.clf.classes_
         best_idx = int(np.argmax(probs))

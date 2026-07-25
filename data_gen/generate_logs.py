@@ -101,11 +101,48 @@ HIGH_VALUE_RESOURCE = "plc_controller_primary"  # the one asset that matters
 GEOS = ["Bengaluru,IN", "Mumbai,IN", "Singapore,SG", "Frankfurt,DE",
         "Ashburn,US", "Tokyo,JP", "Lagos,NG", "Sao_Paulo,BR"]
 
+GEO_COORDS = {
+    "Bengaluru,IN": (12.9716, 77.5946),
+    "Mumbai,IN": (19.0760, 72.8777),
+    "Singapore,SG": (1.3521, 103.8198),
+    "Frankfurt,DE": (50.1109, 8.6821),
+    "Ashburn,US": (39.0438, -77.4874),
+    "Tokyo,JP": (35.6762, 139.6503),
+    "Lagos,NG": (6.5244, 3.3792),
+    "Sao_Paulo,BR": (-23.5505, -46.6333),
+}
+
+MAX_PLAUSIBLE_SPEED_KMH = 1000.0
+
 AUTH_METHODS = ["password", "token", "certificate", "biometric"]
 
 
 def new_id(prefix: str) -> str:
     return f"{prefix}_{uuid.uuid4().hex[:10]}"
+
+
+def haversine_km(geo_a: str, geo_b: str) -> float:
+    lat1, lon1 = GEO_COORDS[geo_a]
+    lat2, lon2 = GEO_COORDS[geo_b]
+    radius_km = 6371.0
+    phi1, phi2 = np.radians(lat1), np.radians(lat2)
+    dphi = np.radians(lat2 - lat1)
+    dlambda = np.radians(lon2 - lon1)
+    a = np.sin(dphi / 2) ** 2 + np.cos(phi1) * np.cos(phi2) * np.sin(dlambda / 2) ** 2
+    return float(2 * radius_km * np.arcsin(np.sqrt(a)))
+
+
+def sample_geo_for_session(entity, session_start_time, last_session_end, last_geo, noise_prob=0.01):
+    if last_geo is None or random.random() > noise_prob:
+        return entity["home_geo"]
+    candidate = random.choice([g for g in GEOS if g != last_geo])
+    if last_session_end is not None:
+        hours_gap = (session_start_time - last_session_end).total_seconds() / 3600
+        if hours_gap > 0:
+            distance_km = haversine_km(last_geo, candidate)
+            if (distance_km / hours_gap) > MAX_PLAUSIBLE_SPEED_KMH:
+                return entity["home_geo"]
+    return candidate
 
 
 # ---------------------------------------------------------------------------
@@ -211,9 +248,15 @@ def generate_normal_sessions(entities, sessions_per_entity_per_day=3.5):
     sessions = []
     for entity in entities:
         n_sessions = int(SIM_DAYS * sessions_per_entity_per_day * random.uniform(0.7, 1.3))
-        for _ in range(n_sessions):
-            start = _random_start_time(entity=entity)
-            sessions.append(make_session_skeleton(entity, start))
+        start_times = sorted(_random_start_time(entity=entity) for _ in range(n_sessions))
+        last_geo = None
+        last_end = None
+        for start in start_times:
+            geo = sample_geo_for_session(entity, start, last_end, last_geo)
+            session = make_session_skeleton(entity, start, geo=geo)
+            sessions.append(session)
+            last_geo = session["geo_locations"][0] if session["geo_locations"] else None
+            last_end = datetime.fromisoformat(session["end_time"])
     return sessions
 
 
@@ -307,13 +350,15 @@ def inject_low_and_slow(entities, n_incidents=3):
     for _ in range(n_incidents):
         entity = random.choice(users)
         # gradual buildup over the sim window: each session touches one more
-        # off-profile resource than the last, individually mild.
+        # off-profile resource than the last, individually mild, and each one
+        # happens in a quieter window than the entity's normal schedule.
         extra_pool = [r for r in RESOURCE_POOL["user"] + RESOURCE_POOL["service_account"]
                       if r not in entity["typical_resources"]]
         n_steps = 5
+        attack_hour = ((entity["typical_hour_mean"] or 10) + 8) % 24
         for i in range(n_steps):
             day_frac = i / n_steps * SIM_DAYS
-            start = SIM_START + timedelta(days=day_frac, hours=entity["typical_hour_mean"] or 10)
+            start = SIM_START + timedelta(days=day_frac, hours=attack_hour)
             res = list(entity["typical_resources"]) + extra_pool[: i + 1]
             s = make_session_skeleton(entity, start, resources=res)
             sessions.append(s)

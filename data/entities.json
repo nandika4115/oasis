@@ -3,7 +3,7 @@
     "entity_id": "user_00",
     "entity_type": "user",
     "home_geo": "Mumbai,IN",
-    "home_device": "dev_eb15034ba9",
+    "home_device": "dev_f12c14341b",
     "typical_hour_mean": 9,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -18,7 +18,7 @@
     "entity_id": "user_01",
     "entity_type": "user",
     "home_geo": "Mumbai,IN",
-    "home_device": "dev_0c83b243a6",
+    "home_device": "dev_35a36b2188",
     "typical_hour_mean": 14,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -33,7 +33,7 @@
     "entity_id": "user_02",
     "entity_type": "user",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_1501364ea4",
+    "home_device": "dev_a4d1ed4546",
     "typical_hour_mean": 14,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -48,7 +48,7 @@
     "entity_id": "user_03",
     "entity_type": "user",
     "home_geo": "Sao_Paulo,BR",
-    "home_device": "dev_bb51fda3c5",
+    "home_device": "dev_ec737fd08c",
     "typical_hour_mean": 14,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -63,7 +63,7 @@
     "entity_id": "user_04",
     "entity_type": "user",
     "home_geo": "Tokyo,JP",
-    "home_device": "dev_08c9abc1a1",
+    "home_device": "dev_b92a21e62e",
     "typical_hour_mean": 10,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -78,7 +78,7 @@
     "entity_id": "user_05",
     "entity_type": "user",
     "home_geo": "Mumbai,IN",
-    "home_device": "dev_f77de4f91e",
+    "home_device": "dev_cc898459bc",
     "typical_hour_mean": 10,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -93,7 +93,7 @@
     "entity_id": "user_06",
     "entity_type": "user",
     "home_geo": "Mumbai,IN",
-    "home_device": "dev_144f2a5320",
+    "home_device": "dev_0de0bee84a",
     "typical_hour_mean": 10,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -108,7 +108,7 @@
     "entity_id": "user_07",
     "entity_type": "user",
     "home_geo": "Tokyo,JP",
-    "home_device": "dev_cd414ee037",
+    "home_device": "dev_5526b9fe13",
     "typical_hour_mean": 14,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -123,7 +123,7 @@
     "entity_id": "user_08",
     "entity_type": "user",
     "home_geo": "Ashburn,US",
-    "home_device": "dev_1a56578162",
+    "home_device": "dev_1e3b7cf1f6",
     "typical_hour_mean": 9,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -138,7 +138,7 @@
     "entity_id": "user_09",
     "entity_type": "user",
     "home_geo": "Tokyo,JP",
-    "home_device": "dev_08cd4f413e",
+    "home_device": "dev_aecc9ee1e8",
     "typical_hour_mean": 9,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -153,7 +153,7 @@
     "entity_id": "user_10",
     "entity_type": "user",
     "home_geo": "Mumbai,IN",
-    "home_device": "dev_9b768ad545",
+    "home_device": "dev_a68e3757c1",
     "typical_hour_mean": 14,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -168,7 +168,7 @@
     "entity_id": "user_11",
     "entity_type": "user",
     "home_geo": "Lagos,NG",
-    "home_device": "dev_943490aa3e",
+    "home_device": "dev_5881ce3a71",
     "typical_hour_mean": 10,
     "typical_hour_std": 1.5,
     "typical_resources": [
@@ -183,7 +183,7 @@
     "entity_id": "svc_00",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_a1f2d8553f",
+    "home_device": "dev_552eab4806",
     "typical_hour_mean": 1,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -198,7 +198,7 @@
     "entity_id": "svc_01",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_9d6ad4a6e6",
+    "home_device": "dev_dbe5d97003",
     "typical_hour_mean": 3,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -213,7 +213,7 @@
     "entity_id": "svc_02",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_47f912be6a",
+    "home_device": "dev_bc080ab270",
     "typical_hour_mean": 3,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -228,7 +228,7 @@
     "entity_id": "svc_03",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_63b29d5fed",
+    "home_device": "dev_5e29d34f6b",
     "typical_hour_mean": 3,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -243,7 +243,7 @@
     "entity_id": "svc_04",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_47c4aecb50",
+    "home_device": "dev_9dd35fa81d",
     "typical_hour_mean": 2,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -258,7 +258,7 @@
     "entity_id": "svc_05",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_6918acbf7d",
+    "home_device": "dev_ba49c5b4d4",
     "typical_hour_mean": 1,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -273,7 +273,7 @@
     "entity_id": "svc_06",
     "entity_type": "service_account",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_a29ea3e8de",
+    "home_device": "dev_fc953a62c6",
     "typical_hour_mean": 2,
     "typical_hour_std": 0.5,
     "typical_resources": [
@@ -288,7 +288,7 @@
     "entity_id": "edge_00",
     "entity_type": "edge_device",
     "home_geo": "Bengaluru,IN",
-    "home_device": "dev_fd097e3b59",
+    "home_device": "dev_af73d314c9",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [
@@ -302,7 +302,7 @@
     "entity_id": "edge_01",
     "entity_type": "edge_device",
     "home_geo": "Ashburn,US",
-    "home_device": "dev_2adae07317",
+    "home_device": "dev_f0b013dc75",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [
@@ -316,7 +316,7 @@
     "entity_id": "edge_02",
     "entity_type": "edge_device",
     "home_geo": "Lagos,NG",
-    "home_device": "dev_3c2e8d95a5",
+    "home_device": "dev_9ddbce52ca",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [
@@ -330,7 +330,7 @@
     "entity_id": "edge_03",
     "entity_type": "edge_device",
     "home_geo": "Ashburn,US",
-    "home_device": "dev_1da38a4b2a",
+    "home_device": "dev_075bb85ffa",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [
@@ -344,7 +344,7 @@
     "entity_id": "edge_04",
     "entity_type": "edge_device",
     "home_geo": "Ashburn,US",
-    "home_device": "dev_abfd116815",
+    "home_device": "dev_c04ed02ee2",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [
@@ -358,7 +358,7 @@
     "entity_id": "edge_05",
     "entity_type": "edge_device",
     "home_geo": "Singapore,SG",
-    "home_device": "dev_ba85e6cb84",
+    "home_device": "dev_96d9d232b8",
     "typical_hour_mean": null,
     "typical_hour_std": null,
     "typical_resources": [

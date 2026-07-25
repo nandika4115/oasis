@@ -1,61 +1,61 @@
 {
-  "entity_id": "user_06",
+  "entity_id": "user_04",
   "final_profile_snapshot": {
-    "entity_id": "user_06",
-    "n_sessions_seen": 84,
+    "entity_id": "user_04",
+    "n_sessions_seen": 89,
     "mean": {
-      "hour_of_day": 12.49,
-      "session_duration_sec": 1103.34,
-      "num_resources_touched": 2.55,
-      "num_new_resources": 0.03,
-      "auth_failures": 0.01,
+      "hour_of_day": 11.99,
+      "session_duration_sec": 389.92,
+      "num_resources_touched": 2.32,
+      "num_new_resources": 0.0,
+      "auth_failures": 0.03,
       "num_distinct_geo": 1.0,
       "is_new_geo": 0.0,
-      "is_new_device": 0.48,
-      "sequence_length": 7.44
+      "is_new_device": 0.36,
+      "sequence_length": 3.39
     },
     "std": {
-      "hour_of_day": 5.07,
-      "session_duration_sec": 52.16,
-      "num_resources_touched": 1.1,
-      "num_new_resources": 0.19,
-      "auth_failures": 0.23,
+      "hour_of_day": 4.63,
+      "session_duration_sec": 65.18,
+      "num_resources_touched": 0.78,
+      "num_new_resources": 0.07,
+      "auth_failures": 0.42,
       "num_distinct_geo": 0.01,
       "is_new_geo": 0.01,
-      "is_new_device": 0.5,
-      "sequence_length": 0.9
+      "is_new_device": 0.48,
+      "sequence_length": 1.19
     }
   },
   "concept_drift_scores": {
     "n_sessions": 22,
     "early_scores": [
-      0.1959,
-      0.2472,
-      0.4981,
-      0.1166,
-      0.2224,
-      0.2257,
-      0.2864,
-      0.2558,
-      0.3728,
-      0.5749,
-      0.1763
+      0.208,
+      0.2709,
+      0.2159,
+      0.1617,
+      0.2544,
+      0.1374,
+      0.162,
+      0.18,
+      0.1023,
+      0.2407,
+      0.1601
     ],
     "late_scores": [
-      0.1439,
-      0.1983,
-      0.1984,
-      0.1648,
-      0.3829,
-      0.0907,
-      0.2736,
-      0.1414,
-      0.2347,
-      0.1848,
-      0.302
+      0.1369,
+      0.2325,
+      0.136,
+      0.1409,
+      0.157,
+      0.1115,
+      0.1706,
+      0.2075,
+      0.1803,
+      0.2644,
+      0.2241
     ],
-    "mean_early": 0.2884,
-    "mean_late": 0.2105,
+    "mean_early": 0.1903,
+    "mean_late": 0.1783,
     "adapted": true
   }
 }

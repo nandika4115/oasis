@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 
 import numpy as np
@@ -46,6 +46,7 @@ GEO_COORDS = {
 
 # Fastest plausible commercial flight speed, with buffer.
 MAX_PLAUSIBLE_SPEED_KMH = 1000.0
+SNAPSHOT_INTERVAL_DAYS = 3
 
 
 def haversine_km(geo_a: str, geo_b: str) -> float:
@@ -89,6 +90,9 @@ class _EntityProfile:
     known_geos: set = field(default_factory=set)
     last_geo: Optional[str] = None
     last_session_end: Optional[str] = None
+    snapshot_mean: Optional[np.ndarray] = None
+    snapshot_std: Optional[np.ndarray] = None
+    snapshot_taken_at: Optional[str] = None
 
 
 class BaselineProfiler:
@@ -137,16 +141,49 @@ class BaselineProfiler:
         distance_km = haversine_km(prof.last_geo, current_geo)
         return (distance_km / gap_hours) > MAX_PLAUSIBLE_SPEED_KMH
 
+    def _maybe_snapshot(self, prof: _EntityProfile, session_time: datetime):
+        if prof.n_seen < 3:
+            return
+        if prof.snapshot_taken_at is None:
+            prof.snapshot_mean = prof.mean.copy()
+            prof.snapshot_std = np.sqrt(np.maximum(prof.var, self.min_std ** 2)).copy()
+            prof.snapshot_taken_at = session_time.isoformat()
+            return
+        try:
+            last_snapshot = datetime.fromisoformat(prof.snapshot_taken_at)
+        except ValueError:
+            last_snapshot = None
+        if last_snapshot is None or (session_time - last_snapshot) >= timedelta(days=SNAPSHOT_INTERVAL_DAYS):
+            prof.snapshot_mean = prof.mean.copy()
+            prof.snapshot_std = np.sqrt(np.maximum(prof.var, self.min_std ** 2)).copy()
+            prof.snapshot_taken_at = session_time.isoformat()
+
+    def _snapshot_drift_score(self, prof: _EntityProfile, x: np.ndarray) -> float:
+        if prof.snapshot_mean is None or prof.snapshot_std is None:
+            return 0.0
+        idx_hour = FEATURE_NAMES.index("hour_of_day")
+        idx_resources = FEATURE_NAMES.index("num_resources_touched")
+        idx_new_resources = FEATURE_NAMES.index("num_new_resources")
+        snapshot_std = np.maximum(prof.snapshot_std, self.min_std)
+        resource_growth = max(0.0, x[idx_resources] - prof.snapshot_mean[idx_resources]) / snapshot_std[idx_resources]
+        new_resource_growth = max(0.0, x[idx_new_resources] - prof.snapshot_mean[idx_new_resources]) / snapshot_std[idx_new_resources]
+        hour_drift = abs(x[idx_hour] - prof.snapshot_mean[idx_hour]) / snapshot_std[idx_hour]
+        score = (0.55 * resource_growth + 0.25 * new_resource_growth + 0.20 * hour_drift) / 6.0
+        return float(np.clip(score, 0.0, 1.0))
+
     def score(self, session: dict):
-        """Returns (rarity_score, is_cold_start, deviation_order, geo_velocity_flag)."""
+        """Returns (rarity_score, is_cold_start, deviation_order, geo_velocity_flag, drift_score)."""
         entity_id = session["entity_id"]
         entity_type = session["entity_type"]
         prof = self._get_or_init(self.profiles, entity_id, entity_type)
         pop = self._get_or_init(self.population, entity_type, entity_type)
+        session_time = datetime.fromisoformat(session["start_time"])
 
         is_cold_start = prof.n_seen < self.cold_start_min_sessions
         x = extract_features(session, prof.known_resources, prof.known_geos)
         geo_velocity_flag = self._geo_velocity_flag(prof, session)
+        self._maybe_snapshot(prof, session_time)
+        drift_score = self._snapshot_drift_score(prof, x)
 
         mean, std = self._effective_mean_std(prof, pop)
         z = (x - mean) / std
@@ -163,7 +200,7 @@ class BaselineProfiler:
             prof.last_geo = session["geo_locations"][0]
         prof.last_session_end = session["end_time"]
 
-        return rarity_score, is_cold_start, deviation_order, geo_velocity_flag
+        return rarity_score, is_cold_start, deviation_order, geo_velocity_flag, drift_score
 
     def _update(self, prof: _EntityProfile, x: np.ndarray):
         if prof.n_seen == 0:
