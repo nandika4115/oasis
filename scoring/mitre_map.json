@@ -1,0 +1,60 @@
+{
+  "_note": "IDs verified against attack.mitre.org (ICS matrix) and the Enterprise matrix as of this build. brute_force/impossible_travel/credential_stuffing use Enterprise IDs because they describe identity/auth abuse patterns that aren't ICS-specific; the other four use ICS-matrix IDs because they describe behavior inside the OT session itself. severity_weight is a simple 0-1 judgment call for this demo (not an official MITRE field) used by risk_engine.py.",
+  "brute_force": {
+    "technique_id": "T1110",
+    "technique_name": "Brute Force",
+    "matrix": "enterprise",
+    "tactic": "Credential Access",
+    "severity_weight": 0.6
+  },
+  "impossible_travel": {
+    "technique_id": "T1078",
+    "technique_name": "Valid Accounts",
+    "matrix": "enterprise",
+    "tactic": "Defense Evasion / Initial Access",
+    "severity_weight": 0.7
+  },
+  "credential_stuffing": {
+    "technique_id": "T1110.004",
+    "technique_name": "Credential Stuffing",
+    "matrix": "enterprise",
+    "tactic": "Credential Access",
+    "severity_weight": 0.6
+  },
+  "lateral_movement": {
+    "technique_id": "T0859",
+    "technique_name": "Valid Accounts",
+    "matrix": "ics",
+    "tactic": "Lateral Movement",
+    "severity_weight": 0.85
+  },
+  "low_and_slow": {
+    "technique_id": "T0802",
+    "technique_name": "Automated Collection",
+    "matrix": "ics",
+    "tactic": "Collection",
+    "severity_weight": 0.75
+  },
+  "privilege_escalation": {
+    "technique_id": "T0890",
+    "technique_name": "Exploitation for Privilege Escalation",
+    "matrix": "ics",
+    "tactic": "Privilege Escalation",
+    "severity_weight": 0.9
+  },
+  "device_spoofing": {
+    "technique_id": "T0856",
+    "technique_name": "Spoof Reporting Message",
+    "matrix": "ics",
+    "tactic": "Evasion",
+    "severity_weight": 0.65
+  },
+  "insider_drift": {
+    "technique_id": null,
+    "technique_name": null,
+    "matrix": null,
+    "tactic": null,
+    "severity_weight": 0.0,
+    "_note": "Not an attack (edge case for concept drift). No MITRE technique applies by design."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "entity_id": "user_07",
+  "final_profile_snapshot": {
+    "entity_id": "user_07",
+    "n_sessions_seen": 59,
+    "mean": {
+      "hour_of_day": 12.95,
+      "session_duration_sec": 887.49,
+      "num_resources_touched": 2.14,
+      "num_new_resources": 0.01,
+      "auth_failures": 0.01,
+      "num_distinct_geo": 1.0,
+      "is_new_geo": 0.0,
+      "is_new_device": 0.47,
+      "sequence_length": 3.56
+    },
+    "std": {
+      "hour_of_day": 4.99,
+      "session_duration_sec": 72.43,
+      "num_resources_touched": 0.63,
+      "num_new_resources": 0.17,
+      "auth_failures": 0.15,
+      "num_distinct_geo": 0.04,
+      "is_new_geo": 0.06,
+      "is_new_device": 0.5,
+      "sequence_length": 0.97
+    }
+  },
+  "concept_drift_scores": {
+    "n_sessions": 22,
+    "early_scores": [
+      0.1593,
+      0.2513,
+      0.201,
+      0.1594,
+      0.213,
+      0.1243,
+      0.1934,
+      0.1876,
+      0.1094,
+      0.1799,
+      0.1725
+    ],
+    "late_scores": [
+      0.1292,
+      0.2132,
+      0.1013,
+      0.1943,
+      0.17,
+      0.1929,
+      0.2264,
+      0.1341,
+      0.1504,
+      0.1578,
+      0.0946
+    ],
+    "mean_early": 0.1774,
+    "mean_late": 0.1604,
+    "adapted": true
+  }
+}

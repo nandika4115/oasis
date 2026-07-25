@@ -1,0 +1,225 @@
+[
+  {
+    "entity_id": "user_00",
+    "entity_type": "user",
+    "home_geo": "Mumbai,IN",
+    "home_device": "dev_6eff6fea51",
+    "typical_hour_mean": 9,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_5",
+      "file_share_2",
+      "report_2"
+    ],
+    "typical_session_len": 5,
+    "typical_duration_mean": 962.8240927476112
+  },
+  {
+    "entity_id": "user_01",
+    "entity_type": "user",
+    "home_geo": "Mumbai,IN",
+    "home_device": "dev_5ce683b387",
+    "typical_hour_mean": 14,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "report_2",
+      "file_share_1",
+      "report_3"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 496.77417732324307
+  },
+  {
+    "entity_id": "user_02",
+    "entity_type": "user",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_c49d63ad5b",
+    "typical_hour_mean": 14,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_4",
+      "report_1",
+      "report_2"
+    ],
+    "typical_session_len": 8,
+    "typical_duration_mean": 677.5678388654928
+  },
+  {
+    "entity_id": "user_03",
+    "entity_type": "user",
+    "home_geo": "Sao_Paulo,BR",
+    "home_device": "dev_bbfd397d00",
+    "typical_hour_mean": 14,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_5",
+      "report_2",
+      "file_share_1"
+    ],
+    "typical_session_len": 5,
+    "typical_duration_mean": 928.3254554894041
+  },
+  {
+    "entity_id": "user_04",
+    "entity_type": "user",
+    "home_geo": "Tokyo,JP",
+    "home_device": "dev_c2487ffd65",
+    "typical_hour_mean": 10,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_3",
+      "file_share_2",
+      "report_3"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 383.4712590421331
+  },
+  {
+    "entity_id": "user_05",
+    "entity_type": "user",
+    "home_geo": "Mumbai,IN",
+    "home_device": "dev_e3a48fc974",
+    "typical_hour_mean": 10,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "report_1",
+      "file_share_5",
+      "file_share_3"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 956.7586080244361
+  },
+  {
+    "entity_id": "user_06",
+    "entity_type": "user",
+    "home_geo": "Mumbai,IN",
+    "home_device": "dev_f2ab27f45a",
+    "typical_hour_mean": 10,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_2",
+      "file_share_5",
+      "file_share_3"
+    ],
+    "typical_session_len": 8,
+    "typical_duration_mean": 1096.906573143126
+  },
+  {
+    "entity_id": "user_07",
+    "entity_type": "user",
+    "home_geo": "Tokyo,JP",
+    "home_device": "dev_d23a8fae9c",
+    "typical_hour_mean": 14,
+    "typical_hour_std": 1.5,
+    "typical_resources": [
+      "file_share_4",
+      "report_1",
+      "file_share_1"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 895.1369867109391
+  },
+  {
+    "entity_id": "svc_00",
+    "entity_type": "service_account",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_4e1af8a35a",
+    "typical_hour_mean": 2,
+    "typical_hour_std": 0.5,
+    "typical_resources": [
+      "db_table_2",
+      "api_endpoint_2",
+      "api_endpoint_3"
+    ],
+    "typical_session_len": 3,
+    "typical_duration_mean": 151.23029400939987
+  },
+  {
+    "entity_id": "svc_01",
+    "entity_type": "service_account",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_7d5d84ae18",
+    "typical_hour_mean": 2,
+    "typical_hour_std": 0.5,
+    "typical_resources": [
+      "api_endpoint_1",
+      "db_table_2",
+      "db_table_3"
+    ],
+    "typical_session_len": 5,
+    "typical_duration_mean": 110.28168738515704
+  },
+  {
+    "entity_id": "svc_02",
+    "entity_type": "service_account",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_dbf9331f2f",
+    "typical_hour_mean": 2,
+    "typical_hour_std": 0.5,
+    "typical_resources": [
+      "db_table_2",
+      "db_table_5",
+      "api_endpoint_1"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 188.19357048712993
+  },
+  {
+    "entity_id": "svc_03",
+    "entity_type": "service_account",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_ac3be31a16",
+    "typical_hour_mean": 1,
+    "typical_hour_std": 0.5,
+    "typical_resources": [
+      "db_table_3",
+      "db_table_4",
+      "api_endpoint_2"
+    ],
+    "typical_session_len": 5,
+    "typical_duration_mean": 297.48560415278286
+  },
+  {
+    "entity_id": "edge_00",
+    "entity_type": "edge_device",
+    "home_geo": "Frankfurt,DE",
+    "home_device": "dev_25f722dd34",
+    "typical_hour_mean": null,
+    "typical_hour_std": null,
+    "typical_resources": [
+      "actuator_1",
+      "sensor_3"
+    ],
+    "typical_session_len": 3,
+    "typical_duration_mean": 50.61432647676939
+  },
+  {
+    "entity_id": "edge_01",
+    "entity_type": "edge_device",
+    "home_geo": "Bengaluru,IN",
+    "home_device": "dev_547b6af3fd",
+    "typical_hour_mean": null,
+    "typical_hour_std": null,
+    "typical_resources": [
+      "actuator_2",
+      "sensor_3"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 54.09667883781324
+  },
+  {
+    "entity_id": "edge_02",
+    "entity_type": "edge_device",
+    "home_geo": "Frankfurt,DE",
+    "home_device": "dev_acb109f436",
+    "typical_hour_mean": null,
+    "typical_hour_std": null,
+    "typical_resources": [
+      "sensor_5",
+      "actuator_1",
+      "plc_controller_primary"
+    ],
+    "typical_session_len": 4,
+    "typical_duration_mean": 49.13638896487265
+  }
+]

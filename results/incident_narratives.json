@@ -1,0 +1,376 @@
+[
+  {
+    "session_id": "sess_04339a674a",
+    "summary": "Session sess_04339a674a for entity edge_02 was flagged as 'impossible_travel' with anomaly_score 0.996 and impact_score 0.9232.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.2843), mapped to Valid Accounts (T1078). Top contributing features: session_duration_sec, sequence_length. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.2734,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_e9a812aec9",
+    "summary": "Session sess_e9a812aec9 for entity edge_02 was flagged as 'device_spoofing' with anomaly_score 0.9857 and impact_score 0.9061.",
+    "why_flagged": "Classified as device_spoofing (confidence 0.27), mapped to Spoof Reporting Message (T0856). Top contributing features: action:write_actuator, hour_of_day, sequence_length. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.2573,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_7d395120c1",
+    "summary": "Session sess_7d395120c1 for entity edge_02 was flagged as 'device_spoofing' with anomaly_score 0.9026 and impact_score 0.8687.",
+    "why_flagged": "Classified as device_spoofing (confidence 0.2325), mapped to Spoof Reporting Message (T0856). Top contributing features: action:write_actuator, sequence_length, hour_of_day. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.2172,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_4dee1e9a1e",
+    "summary": "Session sess_4dee1e9a1e for entity svc_03 was flagged as 'lateral_movement' with anomaly_score 0.7617 and impact_score 0.8553.",
+    "why_flagged": "Classified as lateral_movement (confidence 0.765), mapped to Valid Accounts (T0859). Top contributing features: num_new_resources, num_resources_touched, hour_of_day. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.7097,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_2e987b510f",
+    "summary": "Session sess_2e987b510f for entity svc_01 was flagged as 'lateral_movement' with anomaly_score 0.7393 and impact_score 0.8452.",
+    "why_flagged": "Classified as lateral_movement (confidence 0.815), mapped to Valid Accounts (T0859). Top contributing features: hour_of_day, num_resources_touched, sequence_length. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.7519,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_0c8850c6d8",
+    "summary": "Session sess_0c8850c6d8 for entity svc_00 was flagged as 'lateral_movement' with anomaly_score 0.7302 and impact_score 0.8411.",
+    "why_flagged": "Classified as lateral_movement (confidence 0.635), mapped to Valid Accounts (T0859). Top contributing features: num_resources_touched, num_new_resources, sequence_length. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.5845,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_f48d320988",
+    "summary": "Session sess_f48d320988 for entity svc_01 was flagged as 'lateral_movement' with anomaly_score 0.6728 and impact_score 0.8153.",
+    "why_flagged": "Classified as lateral_movement (confidence 0.605), mapped to Valid Accounts (T0859). Top contributing features: num_resources_touched, hour_of_day, num_new_resources. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.5491,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_ce4f637d88",
+    "summary": "Session sess_ce4f637d88 for entity svc_03 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.805.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.5083), mapped to Valid Accounts (T1078). Top contributing features: off_hours, session_duration_sec, sequence_length. Affected asset criticality: 3/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.4587,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_45bbe46a96",
+    "summary": "Session sess_45bbe46a96 for entity svc_03 was flagged as 'impossible_travel' with anomaly_score 0.995 and impact_score 0.8028.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.5238), mapped to Valid Accounts (T1078). Top contributing features: off_hours, session_duration_sec, num_resources_touched. Affected asset criticality: 3/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.4722,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_0f86f45de3",
+    "summary": "Session sess_0f86f45de3 for entity edge_02 was flagged as 'impossible_travel' with anomaly_score 0.6511 and impact_score 0.768.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.285), mapped to Valid Accounts (T1078). Top contributing features: session_duration_sec, hour_of_day. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.2519,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_5d76a6fea2",
+    "summary": "Session sess_5d76a6fea2 for entity edge_02 was flagged as 'device_spoofing' with anomaly_score 0.6767 and impact_score 0.767.",
+    "why_flagged": "Classified as device_spoofing (confidence 0.2825), mapped to Spoof Reporting Message (T0856). Top contributing features: action:write_actuator, session_duration_sec, num_resources_touched. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.2496,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_c953a1e0c7",
+    "summary": "Session sess_c953a1e0c7 for entity edge_02 was flagged as 'device_spoofing' with anomaly_score 0.6707 and impact_score 0.7643.",
+    "why_flagged": "Classified as device_spoofing (confidence 0.7317), mapped to Spoof Reporting Message (T0856). Top contributing features: action:write_actuator, is_new_device, hour_of_day. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.6455,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_e4314dd811",
+    "summary": "Session sess_e4314dd811 for entity edge_02 was flagged as 'impossible_travel' with anomaly_score 0.5754 and impact_score 0.7339.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.4626), mapped to Valid Accounts (T1078). Top contributing features: action:read_sensor, sequence_length, hour_of_day. Affected asset criticality: 5/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.4011,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_496671f3d2",
+    "summary": "Session sess_496671f3d2 for entity edge_01 was flagged as 'impossible_travel' with anomaly_score 0.6873 and impact_score 0.7243.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.4108), mapped to Valid Accounts (T1078). Top contributing features: action:write_actuator, sequence_length, hour_of_day. Affected asset criticality: 4/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.3542,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_6c707329d7",
+    "summary": "Session sess_6c707329d7 for entity user_03 was flagged as 'brute_force' with anomaly_score 1.0 and impact_score 0.72.",
+    "why_flagged": "Classified as brute_force (confidence 0.8429), mapped to Brute Force (T1110). Top contributing features: auth_failures, session_duration_sec, auth_failures. Affected asset criticality: 2/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.7249,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_78b6af46d6",
+    "summary": "Session sess_78b6af46d6 for entity edge_01 was flagged as 'impossible_travel' with anomaly_score 0.6707 and impact_score 0.7168.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.3775), mapped to Valid Accounts (T1078). Top contributing features: action:write_actuator, num_resources_touched, session_duration_sec. Affected asset criticality: 4/5.",
+    "recommended_action": "escalate",
+    "confidence": 0.324,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_f0c60bfb8e",
+    "summary": "Session sess_f0c60bfb8e for entity edge_01 was flagged as 'impossible_travel' with anomaly_score 0.6181 and impact_score 0.6931.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.3683), mapped to Valid Accounts (T1078). Top contributing features: action:read_sensor, hour_of_day, session_duration_sec. Affected asset criticality: 4/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.3118,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_98f8aa2abd",
+    "summary": "Session sess_98f8aa2abd for entity user_01 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.5033), mapped to Valid Accounts (T1078). Top contributing features: off_hours, session_duration_sec, sequence_length. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.424,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_70811065eb",
+    "summary": "Session sess_70811065eb for entity user_01 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.8265), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, num_resources_touched, is_new_geo. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.6963,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_07b04b9b29",
+    "summary": "Session sess_07b04b9b29 for entity user_01 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.8365), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, hour_of_day, num_resources_touched. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.7048,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_3635bd6453",
+    "summary": "Session sess_3635bd6453 for entity user_01 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.7968), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, hour_of_day, is_new_geo. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.6713,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_9291ea0f9d",
+    "summary": "Session sess_9291ea0f9d for entity user_07 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.7919), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, session_duration_sec, hour_of_day. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.6672,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_8f0bcda1ed",
+    "summary": "Session sess_8f0bcda1ed for entity user_02 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.3723), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, is_new_geo, hour_of_day. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.3137,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_1283d164ae",
+    "summary": "Session sess_1283d164ae for entity user_02 was flagged as 'impossible_travel' with anomaly_score 1.0 and impact_score 0.685.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.3623), mapped to Valid Accounts (T1078). Top contributing features: impossible_travel_velocity, hour_of_day, num_resources_touched. Affected asset criticality: 1/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.3052,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_5f3f0efd8e",
+    "summary": "Session sess_5f3f0efd8e for entity user_01 was flagged as 'brute_force' with anomaly_score 0.9184 and impact_score 0.6833.",
+    "why_flagged": "Classified as brute_force (confidence 0.8629), mapped to Brute Force (T1110). Top contributing features: action:login, auth_failures, session_duration_sec. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.7263,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_c1d6b0e548",
+    "summary": "Session sess_c1d6b0e548 for entity user_02 was flagged as 'brute_force' with anomaly_score 0.9118 and impact_score 0.6803.",
+    "why_flagged": "Classified as brute_force (confidence 0.7129), mapped to Brute Force (T1110). Top contributing features: action:login, auth_failures, session_duration_sec. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.5989,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_e2077ca6db",
+    "summary": "Session sess_e2077ca6db for entity user_00 was flagged as 'brute_force' with anomaly_score 0.9055 and impact_score 0.6775.",
+    "why_flagged": "Classified as brute_force (confidence 0.8929), mapped to Brute Force (T1110). Top contributing features: action:login, auth_failures, hour_of_day. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.7489,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_7ac42f4534",
+    "summary": "Session sess_7ac42f4534 for entity edge_01 was flagged as 'credential_stuffing' with anomaly_score 0.6297 and impact_score 0.6734.",
+    "why_flagged": "Classified as credential_stuffing (confidence 0.29), mapped to Credential Stuffing (T1110.004). Top contributing features: action:write_actuator, hour_of_day, num_resources_touched. Affected asset criticality: 4/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.2426,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_888de5f368",
+    "summary": "Session sess_888de5f368 for entity edge_01 was flagged as 'impossible_travel' with anomaly_score 0.555 and impact_score 0.6647.",
+    "why_flagged": "Classified as impossible_travel (confidence 0.4858), mapped to Valid Accounts (T1078). Top contributing features: action:read_sensor, sequence_length, session_duration_sec. Affected asset criticality: 4/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.4044,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_86901dde22",
+    "summary": "Session sess_86901dde22 for entity edge_00 was flagged as 'device_spoofing' with anomaly_score 0.5773 and impact_score 0.6623.",
+    "why_flagged": "Classified as device_spoofing (confidence 0.3075), mapped to Spoof Reporting Message (T0856). Top contributing features: action:read_sensor, sequence_length, hour_of_day. Affected asset criticality: 4/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.2556,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_35c86d187f",
+    "summary": "Session sess_35c86d187f for entity user_06 was flagged as 'credential_stuffing' with anomaly_score 0.7737 and impact_score 0.6182.",
+    "why_flagged": "Classified as credential_stuffing (confidence 0.9921), mapped to Credential Stuffing (T1110.004). Top contributing features: session_duration_sec, sequence_length, num_resources_touched. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.8027,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_fc16637e6f",
+    "summary": "Session sess_fc16637e6f for entity svc_03 was flagged as 'credential_stuffing' with anomaly_score 0.7077 and impact_score 0.5885.",
+    "why_flagged": "Classified as credential_stuffing (confidence 0.9921), mapped to Credential Stuffing (T1110.004). Top contributing features: hour_of_day, num_resources_touched, session_duration_sec. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.788,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_b12359c293",
+    "summary": "Session sess_b12359c293 for entity user_05 was flagged as 'credential_stuffing' with anomaly_score 0.6865 and impact_score 0.5789.",
+    "why_flagged": "Classified as credential_stuffing (confidence 0.9921), mapped to Credential Stuffing (T1110.004). Top contributing features: session_duration_sec, num_resources_touched, sequence_length. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.7832,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  },
+  {
+    "session_id": "sess_68b526be37",
+    "summary": "Session sess_68b526be37 for entity user_07 was flagged as 'credential_stuffing' with anomaly_score 0.6087 and impact_score 0.5439.",
+    "why_flagged": "Classified as credential_stuffing (confidence 0.9971), mapped to Credential Stuffing (T1110.004). Top contributing features: session_duration_sec, auth_failures, num_resources_touched. Affected asset criticality: 2/5.",
+    "recommended_action": "isolate",
+    "confidence": 0.7697,
+    "_groundedness_check": {
+      "passed": true,
+      "violations": []
+    }
+  }
+]

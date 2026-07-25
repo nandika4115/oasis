@@ -1,0 +1,478 @@
+[
+  {
+    "session_id": "sess_ce4f637d88",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5083,
+    "class_probabilities": {
+      "brute_force": 0.01,
+      "credential_stuffing": 0.01,
+      "device_spoofing": 0.1533,
+      "impossible_travel": 0.5083,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.1983,
+      "privilege_escalation": 0.12
+    }
+  },
+  {
+    "session_id": "sess_45bbe46a96",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5238,
+    "class_probabilities": {
+      "brute_force": 0.0,
+      "credential_stuffing": 0.005,
+      "device_spoofing": 0.0783,
+      "impossible_travel": 0.5238,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.22,
+      "privilege_escalation": 0.1728
+    }
+  },
+  {
+    "session_id": "sess_98f8aa2abd",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5033,
+    "class_probabilities": {
+      "brute_force": 0.1429,
+      "credential_stuffing": 0.2071,
+      "device_spoofing": 0.0658,
+      "impossible_travel": 0.5033,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.0233,
+      "privilege_escalation": 0.0575
+    }
+  },
+  {
+    "session_id": "sess_6c707329d7",
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8429,
+    "class_probabilities": {
+      "brute_force": 0.8429,
+      "credential_stuffing": 0.0571,
+      "device_spoofing": 0.01,
+      "impossible_travel": 0.07,
+      "lateral_movement": 0.005,
+      "low_and_slow": 0.01,
+      "privilege_escalation": 0.005
+    }
+  },
+  {
+    "session_id": "sess_70811065eb",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.8265,
+    "class_probabilities": {
+      "brute_force": 0.0,
+      "credential_stuffing": 0.02,
+      "device_spoofing": 0.0267,
+      "impossible_travel": 0.8265,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.035,
+      "privilege_escalation": 0.0918
+    }
+  },
+  {
+    "session_id": "sess_07b04b9b29",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.8365,
+    "class_probabilities": {
+      "brute_force": 0.0,
+      "credential_stuffing": 0.0,
+      "device_spoofing": 0.0267,
+      "impossible_travel": 0.8365,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.035,
+      "privilege_escalation": 0.1018
+    }
+  },
+  {
+    "session_id": "sess_3635bd6453",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.7968,
+    "class_probabilities": {
+      "brute_force": 0.01,
+      "credential_stuffing": 0.0,
+      "device_spoofing": 0.0858,
+      "impossible_travel": 0.7968,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.0333,
+      "privilege_escalation": 0.074
+    }
+  },
+  {
+    "session_id": "sess_0f86f45de3",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.285,
+    "class_probabilities": {
+      "brute_force": 0.03,
+      "credential_stuffing": 0.265,
+      "device_spoofing": 0.1775,
+      "impossible_travel": 0.285,
+      "lateral_movement": 0.015,
+      "low_and_slow": 0.125,
+      "privilege_escalation": 0.1025
+    }
+  },
+  {
+    "session_id": "sess_04339a674a",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.2843,
+    "class_probabilities": {
+      "brute_force": 0.02,
+      "credential_stuffing": 0.1,
+      "device_spoofing": 0.26,
+      "impossible_travel": 0.2843,
+      "lateral_movement": 0.015,
+      "low_and_slow": 0.135,
+      "privilege_escalation": 0.1857
+    }
+  },
+  {
+    "session_id": "sess_f48d320988",
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.605,
+    "class_probabilities": {
+      "brute_force": 0.02,
+      "credential_stuffing": 0.02,
+      "device_spoofing": 0.025,
+      "impossible_travel": 0.03,
+      "lateral_movement": 0.605,
+      "low_and_slow": 0.155,
+      "privilege_escalation": 0.145
+    }
+  },
+  {
+    "session_id": "sess_e2077ca6db",
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8929,
+    "class_probabilities": {
+      "brute_force": 0.8929,
+      "credential_stuffing": 0.0421,
+      "device_spoofing": 0.01,
+      "impossible_travel": 0.02,
+      "lateral_movement": 0.01,
+      "low_and_slow": 0.025,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_5f3f0efd8e",
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8629,
+    "class_probabilities": {
+      "brute_force": 0.8629,
+      "credential_stuffing": 0.0721,
+      "device_spoofing": 0.015,
+      "impossible_travel": 0.015,
+      "lateral_movement": 0.015,
+      "low_and_slow": 0.02,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_78b6af46d6",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3775,
+    "class_probabilities": {
+      "brute_force": 0.06,
+      "credential_stuffing": 0.075,
+      "device_spoofing": 0.225,
+      "impossible_travel": 0.3775,
+      "lateral_movement": 0.015,
+      "low_and_slow": 0.12,
+      "privilege_escalation": 0.1275
+    }
+  },
+  {
+    "session_id": "sess_c1d6b0e548",
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.7129,
+    "class_probabilities": {
+      "brute_force": 0.7129,
+      "credential_stuffing": 0.1571,
+      "device_spoofing": 0.025,
+      "impossible_travel": 0.025,
+      "lateral_movement": 0.05,
+      "low_and_slow": 0.03,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_f0c60bfb8e",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3683,
+    "class_probabilities": {
+      "brute_force": 0.035,
+      "credential_stuffing": 0.255,
+      "device_spoofing": 0.1767,
+      "impossible_travel": 0.3683,
+      "lateral_movement": 0.01,
+      "low_and_slow": 0.1,
+      "privilege_escalation": 0.055
+    }
+  },
+  {
+    "session_id": "sess_c953a1e0c7",
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.7317,
+    "class_probabilities": {
+      "brute_force": 0.005,
+      "credential_stuffing": 0.02,
+      "device_spoofing": 0.7317,
+      "impossible_travel": 0.1483,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.06,
+      "privilege_escalation": 0.035
+    }
+  },
+  {
+    "session_id": "sess_9291ea0f9d",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.7919,
+    "class_probabilities": {
+      "brute_force": 0.0,
+      "credential_stuffing": 0.0,
+      "device_spoofing": 0.0167,
+      "impossible_travel": 0.7919,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.015,
+      "privilege_escalation": 0.1764
+    }
+  },
+  {
+    "session_id": "sess_0c8850c6d8",
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.635,
+    "class_probabilities": {
+      "brute_force": 0.005,
+      "credential_stuffing": 0.005,
+      "device_spoofing": 0.01,
+      "impossible_travel": 0.045,
+      "lateral_movement": 0.635,
+      "low_and_slow": 0.155,
+      "privilege_escalation": 0.145
+    }
+  },
+  {
+    "session_id": "sess_68b526be37",
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9971,
+    "class_probabilities": {
+      "brute_force": 0.0029,
+      "credential_stuffing": 0.9971,
+      "device_spoofing": 0.0,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.0,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_35c86d187f",
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "class_probabilities": {
+      "brute_force": 0.0029,
+      "credential_stuffing": 0.9921,
+      "device_spoofing": 0.0,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.005,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_fc16637e6f",
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "class_probabilities": {
+      "brute_force": 0.0029,
+      "credential_stuffing": 0.9921,
+      "device_spoofing": 0.0,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.005,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_b12359c293",
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "class_probabilities": {
+      "brute_force": 0.0029,
+      "credential_stuffing": 0.9921,
+      "device_spoofing": 0.0,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.0,
+      "low_and_slow": 0.005,
+      "privilege_escalation": 0.0
+    }
+  },
+  {
+    "session_id": "sess_86901dde22",
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.3075,
+    "class_probabilities": {
+      "brute_force": 0.07,
+      "credential_stuffing": 0.055,
+      "device_spoofing": 0.3075,
+      "impossible_travel": 0.2525,
+      "lateral_movement": 0.045,
+      "low_and_slow": 0.165,
+      "privilege_escalation": 0.105
+    }
+  },
+  {
+    "session_id": "sess_7ac42f4534",
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.29,
+    "class_probabilities": {
+      "brute_force": 0.03,
+      "credential_stuffing": 0.29,
+      "device_spoofing": 0.2375,
+      "impossible_travel": 0.195,
+      "lateral_movement": 0.025,
+      "low_and_slow": 0.145,
+      "privilege_escalation": 0.0775
+    }
+  },
+  {
+    "session_id": "sess_7d395120c1",
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.2325,
+    "class_probabilities": {
+      "brute_force": 0.135,
+      "credential_stuffing": 0.075,
+      "device_spoofing": 0.2325,
+      "impossible_travel": 0.2093,
+      "lateral_movement": 0.065,
+      "low_and_slow": 0.165,
+      "privilege_escalation": 0.1182
+    }
+  },
+  {
+    "session_id": "sess_5d76a6fea2",
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.2825,
+    "class_probabilities": {
+      "brute_force": 0.065,
+      "credential_stuffing": 0.045,
+      "device_spoofing": 0.2825,
+      "impossible_travel": 0.2625,
+      "lateral_movement": 0.045,
+      "low_and_slow": 0.185,
+      "privilege_escalation": 0.115
+    }
+  },
+  {
+    "session_id": "sess_4dee1e9a1e",
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.765,
+    "class_probabilities": {
+      "brute_force": 0.0,
+      "credential_stuffing": 0.0,
+      "device_spoofing": 0.005,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.765,
+      "low_and_slow": 0.14,
+      "privilege_escalation": 0.09
+    }
+  },
+  {
+    "session_id": "sess_8f0bcda1ed",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3723,
+    "class_probabilities": {
+      "brute_force": 0.065,
+      "credential_stuffing": 0.01,
+      "device_spoofing": 0.2325,
+      "impossible_travel": 0.3723,
+      "lateral_movement": 0.07,
+      "low_and_slow": 0.1,
+      "privilege_escalation": 0.1502
+    }
+  },
+  {
+    "session_id": "sess_1283d164ae",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3623,
+    "class_probabilities": {
+      "brute_force": 0.065,
+      "credential_stuffing": 0.01,
+      "device_spoofing": 0.2325,
+      "impossible_travel": 0.3623,
+      "lateral_movement": 0.07,
+      "low_and_slow": 0.095,
+      "privilege_escalation": 0.1652
+    }
+  },
+  {
+    "session_id": "sess_e4314dd811",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4626,
+    "class_probabilities": {
+      "brute_force": 0.095,
+      "credential_stuffing": 0.04,
+      "device_spoofing": 0.1567,
+      "impossible_travel": 0.4626,
+      "lateral_movement": 0.025,
+      "low_and_slow": 0.11,
+      "privilege_escalation": 0.1107
+    }
+  },
+  {
+    "session_id": "sess_888de5f368",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4858,
+    "class_probabilities": {
+      "brute_force": 0.03,
+      "credential_stuffing": 0.035,
+      "device_spoofing": 0.2442,
+      "impossible_travel": 0.4858,
+      "lateral_movement": 0.015,
+      "low_and_slow": 0.105,
+      "privilege_escalation": 0.085
+    }
+  },
+  {
+    "session_id": "sess_e9a812aec9",
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.27,
+    "class_probabilities": {
+      "brute_force": 0.11,
+      "credential_stuffing": 0.09,
+      "device_spoofing": 0.27,
+      "impossible_travel": 0.2325,
+      "lateral_movement": 0.045,
+      "low_and_slow": 0.16,
+      "privilege_escalation": 0.0925
+    }
+  },
+  {
+    "session_id": "sess_2e987b510f",
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.815,
+    "class_probabilities": {
+      "brute_force": 0.015,
+      "credential_stuffing": 0.005,
+      "device_spoofing": 0.03,
+      "impossible_travel": 0.0,
+      "lateral_movement": 0.815,
+      "low_and_slow": 0.08,
+      "privilege_escalation": 0.055
+    }
+  },
+  {
+    "session_id": "sess_496671f3d2",
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4108,
+    "class_probabilities": {
+      "brute_force": 0.065,
+      "credential_stuffing": 0.09,
+      "device_spoofing": 0.2217,
+      "impossible_travel": 0.4108,
+      "lateral_movement": 0.01,
+      "low_and_slow": 0.105,
+      "privilege_escalation": 0.0975
+    }
+  }
+]

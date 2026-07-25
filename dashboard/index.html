@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OASIS — Analyst Dashboard</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background:#0f1419; color:#e6e6e6; margin:0; }
+  header { padding:16px 24px; background:#161b22; border-bottom:1px solid #2a2f36; display:flex; justify-content:space-between; align-items:center; }
+  header h1 { font-size:18px; margin:0; }
+  #meta { font-size:13px; color:#8b949e; }
+  .layout { display:flex; height:calc(100vh - 60px); }
+  #queue { width:46%; overflow-y:auto; border-right:1px solid #2a2f36; }
+  #detail { width:54%; overflow-y:auto; padding:20px; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { text-align:left; padding:10px 12px; font-size:13px; border-bottom:1px solid #21262d; }
+  th { color:#8b949e; position:sticky; top:0; background:#0f1419; font-weight:600; }
+  tr { cursor:pointer; }
+  tr:hover { background:#161b22; }
+  tr.selected { background:#1c2530; }
+  .badge { padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .escalate { background:#3d1418; color:#ff7b72; }
+  .isolate { background:#3d2f14; color:#ffcb6b; }
+  .acknowledge { background:#14261a; color:#7ee787; }
+  .score { font-variant-numeric: tabular-nums; }
+  #detail h2 { margin-top:0; font-size:20px; }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:11px; color:#8b949e; text-transform:uppercase; margin-bottom:4px; }
+  .field .val { font-size:14px; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { background:#21262d; padding:4px 10px; border-radius:6px; font-size:12px; }
+  .actions { display:flex; gap:8px; margin-top:20px; }
+  .actions button { flex:1; padding:10px; border:none; border-radius:6px; font-weight:600; cursor:pointer; font-size:13px; }
+  .btn-ack { background:#21262d; color:#e6e6e6; }
+  .btn-iso { background:#7d5a00; color:#fff; }
+  .btn-esc { background:#8e1519; color:#fff; }
+  .btn-active { outline:2px solid #58a6ff; }
+  .empty { padding:40px; text-align:center; color:#8b949e; }
+  .grounded-ok { color:#7ee787; }
+  .grounded-bad { color:#ff7b72; }
+</style>
+</head>
+<body>
+<header>
+  <h1>OASIS — Analyst Dashboard</h1>
+  <div id="meta">loading…</div>
+</header>
+<div class="layout">
+  <div id="queue">
+    <table>
+      <thead><tr><th>Impact</th><th>Entity</th><th>Type</th><th>Action</th></tr></thead>
+      <tbody id="queue-body"></tbody>
+    </table>
+  </div>
+  <div id="detail"><div class="empty">Select an alert from the queue to see entity history, risk score, and contributing factors.</div></div>
+</div>
+
+<script>
+let incidents = [];
+let selected = null;
+
+async function load() {
+  const res = await fetch('/api/incidents');
+  incidents = await res.json();
+  document.getElementById('meta').textContent =
+    `${incidents.length} flagged sessions — ranked alert queue, top 1% budget in mind`;
+  renderQueue();
+}
+
+function renderQueue() {
+  const body = document.getElementById('queue-body');
+  body.innerHTML = '';
+  incidents.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.className = r.session_id === selected ? 'selected' : '';
+    tr.onclick = () => { selected = r.session_id; renderQueue(); renderDetail(r); };
+    tr.innerHTML = `
+      <td class="score">${r.impact_score.toFixed(2)}</td>
+      <td>${r.entity_id}</td>
+      <td>${r.anomaly_type}</td>
+      <td><span class="badge ${r.recommended_action}">${r.recommended_action}</span></td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function entityHistory(entityId) {
+  return incidents.filter(r => r.entity_id === entityId);
+}
+
+function renderDetail(r) {
+  const history = entityHistory(r.entity_id);
+  const grounded = r.groundedness_passed === undefined
+    ? '<span style="color:#8b949e">not run — execute run_reasoning.py</span>'
+    : (r.groundedness_passed ? '<span class="grounded-ok">passed ✓</span>' : '<span class="grounded-bad">FAILED ✗</span>');
+
+  document.getElementById('detail').innerHTML = `
+    <h2>${r.session_id}</h2>
+
+    <div class="field">
+      <label>Entity / Type / MITRE</label>
+      <div class="val">${r.entity_id} — <strong>${r.anomaly_type}</strong>
+        (confidence ${r.type_confidence}) — ${r.mitre_technique_name || 'n/a'} ${r.mitre_technique_id || ''}</div>
+    </div>
+
+    <div class="field">
+      <label>Risk score</label>
+      <div class="val">anomaly_score=${r.anomaly_score} · asset_criticality=${r.asset_criticality}/5 · <strong>impact_score=${r.impact_score}</strong></div>
+    </div>
+
+    <div class="field">
+      <label>Contributing factors</label>
+      <div class="chips">${r.contributing_features.map(f => `<span class="chip">${f}</span>`).join('')}</div>
+    </div>
+
+    <div class="field">
+      <label>Narrative (Layer 4)</label>
+      <div class="val">${r.narrative_summary || '<em>not generated yet — run run_reasoning.py</em>'}</div>
+      <div class="val" style="margin-top:6px;color:#8b949e">${r.narrative_why_flagged || ''}</div>
+      <div class="val" style="margin-top:6px">Groundedness check: ${grounded}</div>
+    </div>
+
+    <div class="field">
+      <label>Entity history (${history.length} flagged session${history.length===1?'':'s'} for this entity)</label>
+      <div class="chips">${history.map(h => `<span class="chip">${h.anomaly_type} · ${h.impact_score.toFixed(2)}</span>`).join('')}</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-ack ${r.recommended_action==='acknowledge'?'btn-active':''}" onclick="alert('Acknowledged (visual only — no backend action wired yet).')">Acknowledge</button>
+      <button class="btn-iso ${r.recommended_action==='isolate'?'btn-active':''}" onclick="alert('Isolate requested (visual only — no backend action wired yet).')">Isolate</button>
+      <button class="btn-esc ${r.recommended_action==='escalate'?'btn-active':''}" onclick="alert('Escalated (visual only — no backend action wired yet).')">Escalate</button>
+    </div>
+  `;
+}
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+[
+  {
+    "session_id": "sess_04339a674a",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.996,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.2843,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.9232,
+    "contributing_features": [
+      "session_duration_sec",
+      "sequence_length"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_e9a812aec9",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.9857,
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.27,
+    "mitre_technique_id": "T0856",
+    "mitre_technique_name": "Spoof Reporting Message",
+    "asset_criticality": 5,
+    "impact_score": 0.9061,
+    "contributing_features": [
+      "action:write_actuator",
+      "hour_of_day",
+      "sequence_length",
+      "num_resources_touched"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_7d395120c1",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.9026,
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.2325,
+    "mitre_technique_id": "T0856",
+    "mitre_technique_name": "Spoof Reporting Message",
+    "asset_criticality": 5,
+    "impact_score": 0.8687,
+    "contributing_features": [
+      "action:write_actuator",
+      "sequence_length",
+      "hour_of_day",
+      "num_resources_touched"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_4dee1e9a1e",
+    "entity_id": "svc_03",
+    "anomaly_score": 0.7617,
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.765,
+    "mitre_technique_id": "T0859",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.8553,
+    "contributing_features": [
+      "num_new_resources",
+      "num_resources_touched",
+      "hour_of_day"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_2e987b510f",
+    "entity_id": "svc_01",
+    "anomaly_score": 0.7393,
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.815,
+    "mitre_technique_id": "T0859",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.8452,
+    "contributing_features": [
+      "hour_of_day",
+      "num_resources_touched",
+      "sequence_length"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_0c8850c6d8",
+    "entity_id": "svc_00",
+    "anomaly_score": 0.7302,
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.635,
+    "mitre_technique_id": "T0859",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.8411,
+    "contributing_features": [
+      "num_resources_touched",
+      "num_new_resources",
+      "sequence_length"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_f48d320988",
+    "entity_id": "svc_01",
+    "anomaly_score": 0.6728,
+    "anomaly_type": "lateral_movement",
+    "type_confidence": 0.605,
+    "mitre_technique_id": "T0859",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.8153,
+    "contributing_features": [
+      "num_resources_touched",
+      "hour_of_day",
+      "num_new_resources"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_ce4f637d88",
+    "entity_id": "svc_03",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5083,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 3,
+    "impact_score": 0.805,
+    "contributing_features": [
+      "off_hours",
+      "session_duration_sec",
+      "sequence_length"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_45bbe46a96",
+    "entity_id": "svc_03",
+    "anomaly_score": 0.995,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5238,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 3,
+    "impact_score": 0.8028,
+    "contributing_features": [
+      "off_hours",
+      "session_duration_sec",
+      "num_resources_touched"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_0f86f45de3",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.6511,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.285,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.768,
+    "contributing_features": [
+      "session_duration_sec",
+      "hour_of_day"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_5d76a6fea2",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.6767,
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.2825,
+    "mitre_technique_id": "T0856",
+    "mitre_technique_name": "Spoof Reporting Message",
+    "asset_criticality": 5,
+    "impact_score": 0.767,
+    "contributing_features": [
+      "action:write_actuator",
+      "session_duration_sec",
+      "num_resources_touched",
+      "hour_of_day"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_c953a1e0c7",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.6707,
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.7317,
+    "mitre_technique_id": "T0856",
+    "mitre_technique_name": "Spoof Reporting Message",
+    "asset_criticality": 5,
+    "impact_score": 0.7643,
+    "contributing_features": [
+      "action:write_actuator",
+      "is_new_device",
+      "hour_of_day",
+      "session_duration_sec"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_e4314dd811",
+    "entity_id": "edge_02",
+    "anomaly_score": 0.5754,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4626,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 5,
+    "impact_score": 0.7339,
+    "contributing_features": [
+      "action:read_sensor",
+      "sequence_length",
+      "hour_of_day",
+      "num_resources_touched"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_496671f3d2",
+    "entity_id": "edge_01",
+    "anomaly_score": 0.6873,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4108,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 4,
+    "impact_score": 0.7243,
+    "contributing_features": [
+      "action:write_actuator",
+      "sequence_length",
+      "hour_of_day",
+      "num_resources_touched"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_6c707329d7",
+    "entity_id": "user_03",
+    "anomaly_score": 1.0,
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8429,
+    "mitre_technique_id": "T1110",
+    "mitre_technique_name": "Brute Force",
+    "asset_criticality": 2,
+    "impact_score": 0.72,
+    "contributing_features": [
+      "auth_failures",
+      "session_duration_sec",
+      "auth_failures"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_78b6af46d6",
+    "entity_id": "edge_01",
+    "anomaly_score": 0.6707,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3775,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 4,
+    "impact_score": 0.7168,
+    "contributing_features": [
+      "action:write_actuator",
+      "num_resources_touched",
+      "session_duration_sec",
+      "hour_of_day"
+    ],
+    "recommended_action": "escalate"
+  },
+  {
+    "session_id": "sess_f0c60bfb8e",
+    "entity_id": "edge_01",
+    "anomaly_score": 0.6181,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3683,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 4,
+    "impact_score": 0.6931,
+    "contributing_features": [
+      "action:read_sensor",
+      "hour_of_day",
+      "session_duration_sec",
+      "num_resources_touched"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_98f8aa2abd",
+    "entity_id": "user_01",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.5033,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "off_hours",
+      "session_duration_sec",
+      "sequence_length"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_70811065eb",
+    "entity_id": "user_01",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.8265,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "num_resources_touched",
+      "is_new_geo"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_07b04b9b29",
+    "entity_id": "user_01",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.8365,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "hour_of_day",
+      "num_resources_touched"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_3635bd6453",
+    "entity_id": "user_01",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.7968,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "hour_of_day",
+      "is_new_geo"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_9291ea0f9d",
+    "entity_id": "user_07",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.7919,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "session_duration_sec",
+      "hour_of_day",
+      "sequence_length"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_8f0bcda1ed",
+    "entity_id": "user_02",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3723,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "is_new_geo",
+      "hour_of_day",
+      "num_resources_touched"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_1283d164ae",
+    "entity_id": "user_02",
+    "anomaly_score": 1.0,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.3623,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 1,
+    "impact_score": 0.685,
+    "contributing_features": [
+      "impossible_travel_velocity",
+      "hour_of_day",
+      "num_resources_touched",
+      "session_duration_sec"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_5f3f0efd8e",
+    "entity_id": "user_01",
+    "anomaly_score": 0.9184,
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8629,
+    "mitre_technique_id": "T1110",
+    "mitre_technique_name": "Brute Force",
+    "asset_criticality": 2,
+    "impact_score": 0.6833,
+    "contributing_features": [
+      "action:login",
+      "auth_failures",
+      "session_duration_sec",
+      "sequence_length"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_c1d6b0e548",
+    "entity_id": "user_02",
+    "anomaly_score": 0.9118,
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.7129,
+    "mitre_technique_id": "T1110",
+    "mitre_technique_name": "Brute Force",
+    "asset_criticality": 2,
+    "impact_score": 0.6803,
+    "contributing_features": [
+      "action:login",
+      "auth_failures",
+      "session_duration_sec",
+      "hour_of_day"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_e2077ca6db",
+    "entity_id": "user_00",
+    "anomaly_score": 0.9055,
+    "anomaly_type": "brute_force",
+    "type_confidence": 0.8929,
+    "mitre_technique_id": "T1110",
+    "mitre_technique_name": "Brute Force",
+    "asset_criticality": 2,
+    "impact_score": 0.6775,
+    "contributing_features": [
+      "action:login",
+      "auth_failures",
+      "hour_of_day",
+      "session_duration_sec"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_7ac42f4534",
+    "entity_id": "edge_01",
+    "anomaly_score": 0.6297,
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.29,
+    "mitre_technique_id": "T1110.004",
+    "mitre_technique_name": "Credential Stuffing",
+    "asset_criticality": 4,
+    "impact_score": 0.6734,
+    "contributing_features": [
+      "action:write_actuator",
+      "hour_of_day",
+      "num_resources_touched",
+      "session_duration_sec"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_888de5f368",
+    "entity_id": "edge_01",
+    "anomaly_score": 0.555,
+    "anomaly_type": "impossible_travel",
+    "type_confidence": 0.4858,
+    "mitre_technique_id": "T1078",
+    "mitre_technique_name": "Valid Accounts",
+    "asset_criticality": 4,
+    "impact_score": 0.6647,
+    "contributing_features": [
+      "action:read_sensor",
+      "sequence_length",
+      "session_duration_sec",
+      "hour_of_day"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_86901dde22",
+    "entity_id": "edge_00",
+    "anomaly_score": 0.5773,
+    "anomaly_type": "device_spoofing",
+    "type_confidence": 0.3075,
+    "mitre_technique_id": "T0856",
+    "mitre_technique_name": "Spoof Reporting Message",
+    "asset_criticality": 4,
+    "impact_score": 0.6623,
+    "contributing_features": [
+      "action:read_sensor",
+      "sequence_length",
+      "hour_of_day",
+      "session_duration_sec"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_35c86d187f",
+    "entity_id": "user_06",
+    "anomaly_score": 0.7737,
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "mitre_technique_id": "T1110.004",
+    "mitre_technique_name": "Credential Stuffing",
+    "asset_criticality": 2,
+    "impact_score": 0.6182,
+    "contributing_features": [
+      "session_duration_sec",
+      "sequence_length",
+      "num_resources_touched"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_fc16637e6f",
+    "entity_id": "svc_03",
+    "anomaly_score": 0.7077,
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "mitre_technique_id": "T1110.004",
+    "mitre_technique_name": "Credential Stuffing",
+    "asset_criticality": 2,
+    "impact_score": 0.5885,
+    "contributing_features": [
+      "hour_of_day",
+      "num_resources_touched",
+      "session_duration_sec"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_b12359c293",
+    "entity_id": "user_05",
+    "anomaly_score": 0.6865,
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9921,
+    "mitre_technique_id": "T1110.004",
+    "mitre_technique_name": "Credential Stuffing",
+    "asset_criticality": 2,
+    "impact_score": 0.5789,
+    "contributing_features": [
+      "session_duration_sec",
+      "num_resources_touched",
+      "sequence_length"
+    ],
+    "recommended_action": "isolate"
+  },
+  {
+    "session_id": "sess_68b526be37",
+    "entity_id": "user_07",
+    "anomaly_score": 0.6087,
+    "anomaly_type": "credential_stuffing",
+    "type_confidence": 0.9971,
+    "mitre_technique_id": "T1110.004",
+    "mitre_technique_name": "Credential Stuffing",
+    "asset_criticality": 2,
+    "impact_score": 0.5439,
+    "contributing_features": [
+      "session_duration_sec",
+      "auth_failures",
+      "num_resources_touched"
+    ],
+    "recommended_action": "isolate"
+  }
+]
