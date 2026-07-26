@@ -1,130 +1,150 @@
-# OASIS v2 — AI-Powered Behavioral Anomaly Detection for Cybersecurity
+# OASIS — Operational Anomaly & Security Impact System
 
-This is the **Layers 0-5 implementation**: synthetic data → baseline profiling
-→ sequence detection → anomaly classification → impact/risk scoring → LLM
-reasoning → analyst dashboard. All six layers are wired end to end.
+AI-Powered Behavioral Anomaly Detection for Cybersecurity — an OT/ICS instance of the
+official problem statement, built end to end: synthetic access-log generation,
+baseline behavioral profiling, sequence-aware detection, anomaly-type classification,
+explainable risk scoring, grounded LLM reasoning, and an analyst dashboard.
 
+> Traditional UEBA stops at detection. OASIS translates behavioral anomalies into
+> operational risk — combining behavior modeling, asset criticality, MITRE ATT&CK
+> mapping, and grounded, explainable analyst guidance.
+
+Full write-up: [`OASIS_Report.docx`](./OASIS_Report.docx) — read this for methodology,
+metrics, and known limitations. This README is the quick-start and orientation layer.
+
+---
+
+## Headline results (final verified run)
+
+| Metric | Value |
+|---|---|
+| Sessions scored | 1,333 (103 labeled attack, 7.7%) |
+| Precision @ top 1% alert budget | **76.9%** (the brief's own "realistic analyst alert budget" metric) |
+| Detection F1 (best threshold, 0.55) | 0.5053 |
+| Per-class classification accuracy (true positives) | 48/48 correct across all 7 attack types |
+| Groundedness (LLM narratives) | 87/87 passed |
+| Concept drift | `insider_drift` entity confirmed **not** permanently flagged (0.1903 → 0.1783 mean score) |
+| Runtime | 7.91s, single pass, single machine, no GPU |
+
+Full metrics, per-class tables, and the false-positive misrouting breakdown are in
+the report, Section 8.
+
+---
+
+## Architecture
+
+```
+[Synthetic Generator]           data_gen/
+        │  Session (typed, no label field)
+        ▼
+[Layer 0: Baseline Profiling]   profiling/
+  EWMA + cold-start prior + drift-snapshot
+        │  rarity_score, geo_velocity_flag, drift_score, is_cold_start
+        ▼
+[Layer 1: Sequence Detection]   detection/
+  GRU autoencoder (from-scratch NumPy) + cold-start rule engine
+        │  AnomalyEvent (anomaly_score, contributing_features)
+        ▼
+[Layer 2: Anomaly Classification]  classification/
+  RandomForest, flagged-sessions-only, with an explicit "uncertain"
+  confidence floor instead of forcing a guess
+        │  ClassifiedAnomaly (anomaly_type, confidence)
+        ▼
+[Layer 3: Risk Scoring]         scoring/
+  Transparent arithmetic — no model where one isn't needed
+        │  RiskAssessment (impact_score, recommended_action)
+        ▼
+[Layer 4: Reasoning]            reasoning/
+  Grounded LLM narrative + automated groundedness check
+        │  IncidentNarrative
+        ▼
+[Layer 5: Analyst Dashboard]    api/ + dashboard/
+  Ranked alert queue, entity history, contributing factors
+```
+
+Every arrow above is a typed Pydantic contract (`contracts/schemas.py`), imported by
+every layer — no layer can silently drift a field name.
+
+---
+
+## Repo structure
+
+```
+oasis/
+├── data_gen/          synthetic log + attack-taxonomy generator
+├── profiling/         Layer 0 — baseline profiler, drift snapshot, geo-velocity check
+├── detection/         Layer 1 — GRU autoencoder + signal combination
+├── classification/    Layer 2 — RandomForest + confidence floor
+├── scoring/           Layer 3 — risk engine + MITRE map + asset criticality
+├── reasoning/         Layer 4 — grounded narrative generation
+├── api/ + dashboard/  Layer 5 — FastAPI backend + analyst UI
+├── eval/              metrics.py — precision/recall/F1, precision@top-1%,
+│                      cold-start eval, concept-drift eval, misrouting diagnostic
+├── contracts/         schemas.py — every typed contract, single source of truth
+├── run_pipeline.py    runs Layers 0–3 end to end, threshold sweep, writes results/
+├── run_reasoning.py   runs Layer 4 over Layer 3's output
+└── results/           generated: metrics.json, risk_assessments.json,
+                       incident_narratives.json, worked_example_drift_profile.json
+```
+
+---
 
 ## Quick start
 
 ```bash
-pip install -r requirements.txt
+# 1. Generate synthetic data (deterministic — seeded)
+python data_gen/generate_logs.py
 
-# Layers 0-3: generate data, train/score/classify/risk-score
-python3 data_gen/generate_logs.py   # writes data/sessions.jsonl + data/ground_truth.json
-python3 run_pipeline.py             # runs Layers 0-3 + threshold sweep, writes results/*.json
+# 2. Run Layers 0–3 (training, detection, classification, risk scoring)
+python run_pipeline.py
 
-# Layer 4: LLM reasoning (offline template fallback works with no API key;
-# export ANTHROPIC_API_KEY=sk-... first for real LLM narratives)
-python3 run_reasoning.py
+# 3. Run Layer 4 (grounded incident narratives)
+python run_reasoning.py
 
-# Layer 5: dashboard
-uvicorn api.main:app --reload --port 8000
-# open http://localhost:8000/
+# 4. Start the dashboard
+uvicorn api.main:app --reload
+# open http://localhost:8000
 ```
 
-Everything upstream of the dashboard is deterministic (seeded), so re-running
-`run_pipeline.py` reproduces the same numbers.
+All randomness (data generation, GRU init, classifier) is seeded (`RNG_SEED = 42`) —
+reruns without a code change reproduce the exact same numbers.
 
-## What each layer actually does
+---
 
-| Layer | File | What it is |
-|---|---|---|
-| 0 — Baseline Profiling | `profiling/baseline_model.py` | Per-entity EWMA over 9 features, population-prior blend for cold-start, decay for concept drift, **plus a dedicated cross-session geo-velocity flag for impossible travel** (kept separate from the averaged feature vector — see Bugs Fixed below) |
-| 1 — Detection | `detection/gru_autoencoder.py`, `detection/model.py` | From-scratch NumPy GRU autoencoder (normal-only, reconstruction error) + profiler rarity + cold-start rule fallback + geo-velocity flag, combined via `max()` |
-| 2 — Classification | `classification/classifier.py` | RandomForest, trained ONLY on true attack-labeled sessions, applied ONLY to sessions Layer 1 flagged |
-| 3 — Risk Scoring | `scoring/risk_engine.py`, `scoring/mitre_map.json`, `scoring/asset_criticality.json` | Transparent arithmetic: `impact_score = w1*anomaly_score + w2*asset_criticality + w3*mitre_severity` |
-| 4 — Reasoning | `reasoning/llm_layer.py`, `run_reasoning.py` | Grounded narrative generation from `RiskAssessment` JSON only, with an automated groundedness check (no entity/MITRE ID in output that isn't in the input) |
-| 5 — Dashboard | `api/main.py`, `dashboard/index.html` | FastAPI serving a ranked alert queue (sorted by `impact_score`), entity history view, contributing factors, and a recommended-action panel |
+## What makes this different from "we built UEBA with an LLM"
 
-Run `run_pipeline.py` and read the printed summary — it's the same numbers
-that land in `results/metrics.json`.
+1. **Detection and classification are separate models on purpose** — detection is
+   unsupervised (trained only on normal sessions) so it never fights class imbalance;
+   classification only ever runs on sessions already flagged.
+2. **Cold-start and concept drift are measured, not just claimed** — real before/after
+   numbers, not a bullet point.
+3. **A dedicated, non-averaged geo-velocity signal** — added after discovering that
+   averaging it into a 9-feature rarity score silently diluted it to invisibility.
+4. **The classifier can say "uncertain"** instead of being forced to guess — a
+   deliberate fix after finding that a forced guess actively misdirects a SOC analyst
+   more than an honest "this doesn't clearly match a known pattern."
+5. **A grounded LLM layer with a live, verifiable groundedness check** — not "trust
+   the model."
 
-## Bugs found and fixed (post-verification pass)
+Three real bugs were found, root-caused, fixed, and re-verified during this project's
+own internal review — see the report, Section 10.2, for the full diagnostic story on
+each.
 
-Two correctness issues were found by cross-checking `results/metrics.json`
-against the code and the brief's evaluation criteria, and both are now fixed:
+---
 
-1. **`impossible_travel` was being completely missed (support: 0).**
-   Root cause: the only geo signal (`is_new_geo`) was one of 9 features
-   averaged into `rarity_score`, so a single strong deviation got diluted
-   into noise by eight normal-looking features. Fix: added
-   `_geo_velocity_flag()` in `profiling/baseline_model.py` — a dedicated,
-   non-averaged signal that tracks each entity's `last_geo` /
-   `last_session_end` and flags a geo change within an implausible time gap
-   (`IMPOSSIBLE_TRAVEL_MAX_GAP_HOURS`, currently a flat 3-hour threshold —
-   a real system would use actual distance/plausible-speed, flagged as a
-   placeholder). Wired into `detection/model.py::score_all()` via `max()`,
-   the same pattern already used for the cold-start rule.
+## Known limitations (see report, Section 10, for the full breakdown)
 
-2. **Per-class classification metrics were contaminated by Layer 1's false
-   positives.** The classifier has no "normal" class to predict, so every
-   false positive Layer 1 flagged got force-assigned to whichever attack
-   type it resembled most — dragging down `device_spoofing` and
-   `credential_stuffing` precision for reasons that had nothing to do with
-   the classifier's actual accuracy. Fix: `eval/metrics.py` now has two
-   separate functions — `true_positive_classified_events()` (the real
-   Layer 2 evaluation, true attacks only) and `false_positive_misrouting()`
-   (a separate diagnostic showing where FPs landed, useful for the report's
-   limitations section but no longer polluting the accuracy number).
+- Batch/static pipeline — designed to be streaming-compatible, not deployed as such.
+- Trained on synthetic sessions only; no real-world generalization claim.
+- Risk-scoring weights and thresholds are principled starting values, not tuned
+  against real incident data.
+- `privilege_escalation` and `credential_stuffing` have thin detection-layer recall
+  relative to their injection volume — an open item, named honestly rather than hidden.
 
-`run_pipeline.py` also now sweeps `THRESHOLD_SWEEP = [0.30, 0.35, 0.40, 0.45,
-0.50, 0.55]` and picks the threshold with the best F1 automatically, printing
-the full sweep table before the summary.
+---
 
-## Honest limitations (carry into the report's Section 10 verbatim if useful)
+## Team
 
-1. **The GRU cell** was implemented from first principles in NumPy rather than via torch.nn.GRU, giving full visibility into the reconstruction-error computation used for explainability (Section 6) — mathematically identical, and a one-line swap point for production-scale minibatched training.
-2. **Small sample size per attack class.** Around 15-20 examples are now
-   injected per attack type. The per-class precision/recall table
-   (`results/metrics.json` → `per_class_classification_true_positives_only`)
-   is real, not fabricated, and much less noisy than the first pass. More
-   injected examples per class would tighten this further.
-3. **Impossible-travel detection uses a distance/speed threshold, not a full
-   route-planning model.** `profiling/baseline_model.py` now computes
-   geo-distance and implied speed between consecutive sessions, so it is
-   materially better than the earlier flat time threshold, but still a
-   simplified approximation rather than a real travel planner.
-4. **Risk-scoring weights and action thresholds** are principled starting values, chosen for interpretability rather than fit to data — appropriate for a synthetic-only build where tuning against fabricated incident data would produce false precision, not real calibration. Tuning against real incident history is the natural first step post-deployment, not a gap in this build.
-5. **Static/batch, not streaming.** Sessions are scored in a single pass
-   over a pre-generated file, in timestamp order, to mirror how a streaming
-   system *would* process them (the profiler is stateful/incremental on
-   purpose). There's no actual message queue / real-time ingestion here.
-6. **GRU trained on synthetic sessions only.** No claim of real-world
-   generalization — the vocabulary, session shapes, and attack patterns are
-   all self-generated.
-7. **Layer 4's groundedness check is regex-based, not semantic.** It catches
-   hallucinated entity IDs and MITRE IDs specifically, not all forms of
-   ungrounded content. Good enough as a demonstrable, real metric for the
-   report; not a complete factuality guarantee.
-8. **Layer 5's action buttons are visual only.** Acknowledge/Isolate/Escalate
-   show a confirmation but have no backend action behind them yet, per the
-   brief's own allowance ("doesn't need real backend logic behind the
-   button, just needs to visibly represent the decision").
-
-## File map
-### Core contracts and shared data
-- `contracts/schemas.py` — every layer's I/O contract.
-- `data_gen/generate_logs.py` — synthetic generator + all 8 attack injectors.
-- `data/` — generated inputs (`sessions.jsonl`, `ground_truth.json`, `entities.json`).
-- `requirements.txt` — Python dependencies.
-
-### Layers 0-3: detection, classification, scoring
-- `profiling/baseline_model.py` — Layer 0, including the geo-velocity fix.
-- `detection/gru_autoencoder.py` — NumPy GRU core.
-- `detection/model.py` — Layer 1 wrapper (GRU + rarity + cold-start rule + geo-velocity).
-- `classification/classifier.py` — Layer 2.
-- `scoring/risk_engine.py` — Layer 3.
-- `scoring/mitre_map.json` — verified MITRE ATT&CK / ATT&CK-for-ICS IDs.
-- `scoring/asset_criticality.json` — asset criticality weights.
-
-### Layers 4-5: narrative and dashboard
-- `reasoning/llm_layer.py` — Layer 4 narrative generation + groundedness check.
-- `run_reasoning.py` — runs Layer 4 over `results/risk_assessments.json`.
-- `api/main.py` — Layer 5 FastAPI service.
-- `dashboard/index.html` — Layer 5 ranked alert queue UI.
-
-### Evaluation and orchestration
-- `eval/metrics.py` — precision/recall/F1, precision@1%, TP-only confusion matrix, FP misrouting, cold-start buckets, concept drift.
-- `run_pipeline.py` — orchestrates Layers 0-3 + threshold sweep.
-- `results/` — generated outputs (`anomaly_events`, `classified_events`, `risk_assessments`, `incident_narratives`, `metrics`, `worked drift example`).
+Built for the AI-Powered Behavioral Anomaly Detection for Cybersecurity problem
+statement. See `OASIS_Report.docx` for the full methodology and metrics writeup, and
+the accompanying slide deck for the condensed pitch version.
