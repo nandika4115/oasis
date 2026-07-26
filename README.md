@@ -83,6 +83,7 @@ oasis/
 ├── contracts/         schemas.py — every typed contract, single source of truth
 ├── run_pipeline.py    runs Layers 0–3 end to end, threshold sweep, writes results/
 ├── run_reasoning.py   runs Layer 4 over Layer 3's output
+├── run_streaming_demo.py   lightweight streaming-feasibility demo (see report §9)
 └── results/           generated: metrics.json, risk_assessments.json,
                        incident_narratives.json, worked_example_drift_profile.json
 ```
@@ -92,6 +93,7 @@ oasis/
 ## Quick start
 
 ```bash
+pip install -r requirements.txt
 # 1. Generate synthetic data (deterministic — seeded)
 python data_gen/generate_logs.py
 
@@ -101,10 +103,26 @@ python run_pipeline.py
 # 3. Run Layer 4 (grounded incident narratives)
 python run_reasoning.py
 
-# 4. Start the dashboard
+# 4. (Optional) Run the streaming-feasibility demo — replays sessions.jsonl
+#    one at a time in timestamp order, scoring each on arrival rather than
+#    in a single batch pass. Produces results/streaming_demo_log.txt.
+python run_streaming_demo.py
+
+# 5. Start the dashboard
 uvicorn api.main:app --reload
 # open http://localhost:8000
 ```
+Result: **87 alerts raised** — identical to the batch pipeline's 48 TP + 39 FP —
+confirming session-by-session streaming replay produces the same result as batch
+scoring. The replay uses an independently but identically fitted detector (same
+seeded training process, not a reused model file), which is itself a stronger claim:
+the whole pipeline is fully deterministic end to end, not just that one trained
+model was reused twice. Mean per-session scoring latency: **0.95ms** (max 4.2ms —
+ordinary timing variance, not correlated with session type or anomaly score).
+
+This is not a production message-queue deployment — see the report, Section 9, for
+what a real deployment would add (Kafka/MQTT ingestion, an external per-entity state
+store for multi-worker scoring).
 
 All randomness (data generation, GRU init, classifier) is seeded (`RNG_SEED = 42`) —
 reruns without a code change reproduce the exact same numbers.
