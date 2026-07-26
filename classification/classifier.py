@@ -46,11 +46,14 @@ EXTRA_FEATURE_NAMES = [
     "geo_velocity_flag",
     "rarity_score",
     "drift_score",
+    "device_recurrence_count",
 ]
 ALL_FEATURE_NAMES = FEATURE_NAMES + EXTRA_FEATURE_NAMES
 
 PRIVILEGED_ACTIONS = {"grant_admin", "access_admin_panel", "modify_permissions",
                        "access_root_shell", "disable_logging"}
+
+CONFIDENCE_THRESHOLD = 0.4
 
 
 def extract_classification_features(
@@ -58,9 +61,12 @@ def extract_classification_features(
     known_resources: set,
     known_geos: set = frozenset(),
     detection_signals: dict | None = None,
+    device_recurrence: dict | None = None,
 ) -> np.ndarray:
     base = extract_features(session, known_resources, known_geos)
     signals = detection_signals or {}
+    recurrence_key = (session["entity_id"], session["device_fingerprint"])
+    recurrence_count = (device_recurrence or {}).get(recurrence_key, 1)
     extra = np.array([
         1.0 if any(a in PRIVILEGED_ACTIONS for a in session["command_sequence"]) else 0.0,
         len(set(session["source_ips"])),
@@ -68,6 +74,7 @@ def extract_classification_features(
         1.0 if signals.get("geo_velocity_flag") else 0.0,
         float(signals.get("rarity_score", 0.0)),
         float(signals.get("drift_score", 0.0)),
+        float(recurrence_count),
     ])
     return np.concatenate([base, extra])
 
@@ -89,6 +96,7 @@ class AnomalyClassifier:
         known_resources_by_entity: dict,
         known_geos_by_entity: dict | None = None,
         detection_signals_by_session: dict | None = None,
+        device_recurrence: dict | None = None,
     ):
         """`labeled_sessions` must be ATTACK-labeled sessions only (never
         'normal' / 'insider_drift') — see module docstring."""
@@ -100,6 +108,7 @@ class AnomalyClassifier:
                 known_resources_by_entity.get(s["entity_id"], set()),
                 known_geos_by_entity.get(s["entity_id"], set()),
                 detection_signals_by_session.get(s["session_id"]),
+                device_recurrence,
             )
             for s in labeled_sessions
         ])
@@ -116,10 +125,26 @@ class AnomalyClassifier:
         self._fitted = True
         return X_test, y_test
 
-    def predict(self, session: dict, known_resources: set, known_geos: set = frozenset(), detection_signals: dict | None = None):
-        x = extract_classification_features(session, known_resources, known_geos, detection_signals).reshape(1, -1)
+    def predict(
+        self,
+        session: dict,
+        known_resources: set,
+        known_geos: set = frozenset(),
+        detection_signals: dict | None = None,
+        device_recurrence: dict | None = None,
+    ):
+        x = extract_classification_features(
+            session,
+            known_resources,
+            known_geos,
+            detection_signals,
+            device_recurrence,
+        ).reshape(1, -1)
         probs = self.clf.predict_proba(x)[0]
         classes = self.clf.classes_
         best_idx = int(np.argmax(probs))
+        best_prob = float(probs[best_idx])
         class_probabilities = {c: round(float(p), 4) for c, p in zip(classes, probs)}
-        return classes[best_idx], float(probs[best_idx]), class_probabilities
+        if best_prob < CONFIDENCE_THRESHOLD:
+            return "uncertain", best_prob, class_probabilities
+        return classes[best_idx], best_prob, class_probabilities

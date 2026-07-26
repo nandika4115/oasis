@@ -118,10 +118,8 @@
   "false_positive_misrouting": {
     "n_false_positives_classified": 39,
     "misrouted_to": {
-      "device_spoofing": 26,
-      "credential_stuffing": 1,
-      "impossible_travel": 10,
-      "privilege_escalation": 2
+      "uncertain": 29,
+      "impossible_travel": 10
     }
   },
   "cold_start": {
@@ -170,7 +168,7 @@
     "mean_late": 0.1783,
     "adapted": true
   },
-  "runtime_sec": 5.14,
+  "runtime_sec": 7.91,
   "n_sessions_total": 1333,
   "n_sessions_flagged": 87,
   "grounded_narratives": {

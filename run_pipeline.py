@@ -28,6 +28,19 @@ def load_data():
     return sessions, ground_truth
 
 
+def compute_device_recurrence(sessions):
+    """Batch-only: counts how many times each (entity_id, device_fingerprint)
+    pair appears across the full dataset. A spoofed device_fp appears once;
+    a legitimately adopted new device recurs across many sessions. Not
+    available in a true streaming deployment without a probation window —
+    see Section 10."""
+    counts = {}
+    for s in sessions:
+        key = (s["entity_id"], s["device_fingerprint"])
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
 def main():
     t0 = time.time()
     print("=" * 70)
@@ -36,6 +49,7 @@ def main():
 
     sessions, ground_truth = load_data()
     sessions_by_id = {s["session_id"]: s for s in sessions}
+    device_recurrence = compute_device_recurrence(sessions)
     print(f"Loaded {len(sessions)} sessions.")
 
     normal_sessions = [s for s in sessions if ground_truth[s["session_id"]]["label"] == "normal"]
@@ -75,6 +89,7 @@ def main():
         known_resources_by_entity,
         known_geos_by_entity,
         anomaly_by_id,
+        device_recurrence,
     )
     print(f"  trained on {len(attack_sessions)} attack sessions across {len(classifier.classes_)} classes: "
           f"{classifier.classes_}")
@@ -91,6 +106,7 @@ def main():
             known_res,
             known_geos,
             anomaly_by_id.get(ev_["session_id"]),
+            device_recurrence,
         )
         classified_events.append({
             "session_id": ev_["session_id"],

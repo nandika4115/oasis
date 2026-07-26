@@ -60,8 +60,12 @@ class RiskEngine:
         classified: dict with anomaly_type/type_confidence (from classification/classifier.py)
         """
         anomaly_type = classified["anomaly_type"]
-        mitre = self.mitre_map.get(anomaly_type, {})
-        severity_weight = mitre.get("severity_weight", 0.5)
+        if anomaly_type == "uncertain":
+            mitre = {"technique_id": None, "technique_name": "Unclassified — below confidence threshold"}
+            severity_weight = 0.35
+        else:
+            mitre = self.mitre_map.get(anomaly_type, {})
+            severity_weight = mitre.get("severity_weight", 0.5)
         asset_crit = self._asset_criticality_for_session(resources_touched)
 
         w = self.weights
@@ -83,5 +87,5 @@ class RiskEngine:
             "asset_criticality": asset_crit,
             "impact_score": impact_score,
             "contributing_features": anomaly_event["contributing_features"],
-            "recommended_action": self._recommended_action(impact_score),
+            "recommended_action": "acknowledge" if anomaly_type == "uncertain" else self._recommended_action(impact_score),
         }
