@@ -168,7 +168,7 @@
     "mean_late": 0.1783,
     "adapted": true
   },
-  "runtime_sec": 7.91,
+  "runtime_sec": 4.92,
   "n_sessions_total": 1333,
   "n_sessions_flagged": 87,
   "grounded_narratives": {
